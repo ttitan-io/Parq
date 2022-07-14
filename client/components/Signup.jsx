@@ -49,8 +49,6 @@ export const Signup = () => {
     }, 0);
   }
 
-
-
   return (
     <Box
       component="form"
@@ -60,7 +58,7 @@ export const Signup = () => {
       noValidate
       autoComplete="off"
     >
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr'}}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr" }}>
         <TextField
           onChange={(e) => setCreateFirstname(e.target.value)}
           required
@@ -96,15 +94,15 @@ export const Signup = () => {
           color="primary"
           variant="contained"
           // style={btnstyle}
-          sx={{ 
+          sx={{
             border: ".75px solid #36454F",
-            color: '#BBD1D1',
-            '&:hover': {
-              backgroundColor: '#BBD1D1',
-              color: '#F8F6F2',
+            color: "#BBD1D1",
+            "&:hover": {
+              backgroundColor: "#BBD1D1",
+              color: "#F8F6F2",
               boxShadow: "none",
-          },
-            background: '#F8F6F2',
+            },
+            background: "#F8F6F2",
             textTransform: "none",
             boxShadow: "none",
             width: "92%",
@@ -114,7 +112,7 @@ export const Signup = () => {
             paddingBottom: ".75rem",
             fontWeight: "bold",
             marginBottom: ".5rem",
-            }}
+          }}
         >
           {" "}
           create account
@@ -123,4 +121,3 @@ export const Signup = () => {
     </Box>
   );
 };
-

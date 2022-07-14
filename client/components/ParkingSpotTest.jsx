@@ -27,11 +27,15 @@ const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ 
-      position: "relative",
-      marginLeft: "10rem",
-      width: "50%",
-      height: "auto"}} {...other}>  
+    <DialogTitle
+      sx={{
+        position: "relative",
+        marginLeft: "10rem",
+        width: "50%",
+        height: "auto",
+      }}
+      {...other}
+    >
       {children}
       <img className="websiteLogo" src={logo} />
       {onClose ? (
@@ -70,49 +74,57 @@ export default function ParkingSpotTest({ info, isVisible }) {
 
   return (
     <>
-    <div className="parkingSpotTileOutter" onClick={onSpotClick}>
-      <div  className="parkingSpotTile" onClick={onSpotClick}>
-        <img className="tileTopo" src={topoBackground} width="100%"></img>
-        <span>
-          <h1 className="spotAddress">{address}</h1>
-        </span>
-      </div>
-      <div>
-        <BootstrapDialog
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={open}
-        >
-          <BootstrapDialogTitle
-            id="customized-dialog-title"
+      <div className="parkingSpotTileOutter" onClick={onSpotClick}>
+        <div className="parkingSpotTile" onClick={onSpotClick}>
+          <img className="tileTopo" src={topoBackground} width="100%"></img>
+          <span>
+            <h1 className="spotAddress">{address}</h1>
+          </span>
+        </div>
+        <div>
+          <BootstrapDialog
             onClose={handleClose}
-          ></BootstrapDialogTitle>
-          <DialogContent dividers sx={{
-            fontFamily: "Helvetica",
-            fontWeight: "thin",
-            textAlign: "center"}}>
-              <div style={{fontSize: "x-large", fontWeight: "bold", color: "#BBD1D1"}}>
-              ${price}/hr
+            aria-labelledby="customized-dialog-title"
+            open={open}
+          >
+            <BootstrapDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose}
+            ></BootstrapDialogTitle>
+            <DialogContent
+              dividers
+              sx={{
+                fontFamily: "Helvetica",
+                fontWeight: "thin",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "x-large",
+                  fontWeight: "bold",
+                  color: "#BBD1D1",
+                }}
+              >
+                ${price}/hr
               </div>
               <br></br>
-              <div style={{fontWeight: "lighter"}}>
-              {address} 
-              </div>
-            {size === 1 && (
-              <div style={{fontWeight: "lighter"}}>
-                {options} | {size} car
+              <div style={{ fontWeight: "lighter" }}>{address}</div>
+              {size === 1 && (
+                <div style={{ fontWeight: "lighter" }}>
+                  {options} | {size} car
                 </div>
               )}
-               {size > 1 && (
-              <div style={{fontWeight: "lighter"}}>
-                {options} | {size} cars
+              {size > 1 && (
+                <div style={{ fontWeight: "lighter" }}>
+                  {options} | {size} cars
                 </div>
               )}
-            {/* ${price}/hr | {options} | {size} cars */}
-            <BookingForm hostName={hostName} address={address}/>
-          </DialogContent>
-        </BootstrapDialog>
-      </div>
+              {/* ${price}/hr | {options} | {size} cars */}
+              <BookingForm hostName={hostName} address={address} />
+            </DialogContent>
+          </BootstrapDialog>
+        </div>
       </div>
     </>
   );

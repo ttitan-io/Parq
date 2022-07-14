@@ -37,7 +37,7 @@ cookieController.verifyCookie = (req, res, next) => {
       return next({
         log: "error in verify login",
         status: 403,
-        message: err
+        message: err,
       });
     }
     res.locals.username = decoded.username;

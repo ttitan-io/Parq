@@ -134,15 +134,15 @@ export const BookingForm = ({ hostName, address }) => {
             color="primary"
             variant="contained"
             // style={btnstyle}
-            sx={{ 
+            sx={{
               border: ".75px solid #36454F",
-              color: '#BBD1D1',
-              '&:hover': {
-                backgroundColor: '#BBD1D1',
-                color: '#F8F6F2',
+              color: "#BBD1D1",
+              "&:hover": {
+                backgroundColor: "#BBD1D1",
+                color: "#F8F6F2",
                 boxShadow: "none",
-            },
-              background: '#F8F6F2',
+              },
+              background: "#F8F6F2",
               textTransform: "none",
               boxShadow: "none",
               width: "84%",
@@ -150,8 +150,8 @@ export const BookingForm = ({ hostName, address }) => {
               marginLeft: ".2rem",
               paddingTop: ".75rem",
               paddingBottom: ".75rem",
-              fontWeight: "bold"
-              }}
+              fontWeight: "bold",
+            }}
           >
             {" "}
             Book
@@ -171,7 +171,7 @@ export const BookingForm = ({ hostName, address }) => {
           onClose={handleClose}
         ></BootstrapDialogTitle>
         <DialogContent dividers>
-          <Login  />
+          <Login />
         </DialogContent>
       </BootstrapDialog>
     );
