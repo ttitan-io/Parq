@@ -171,6 +171,34 @@ img.archway {
 }
 
 .profile {
-  width: 80%;
+  width: 75%;
   height: auto;
 }
+
+.upcomingBookings, .pastBookings { 
+  height: 285px;
+  border-bottom: .75px solid #36454F; 
+  scroll-behavior: smooth;
+  overflow-x: scroll; 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+
+.currentListings {
+  height: calc( 100vh - (71.75px + 301.75px + 301.75px));
+  scroll-behavior: smooth;
+  overflow-x: scroll; 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.upcomingBookings p,.pastBookings p, .currentListings p  {
+  font-family: Helvetica;
+  font-weight: 100;
+  padding-top: .1rem;
+  padding-left: .5rem;
+}
+

@@ -44,11 +44,6 @@ export default function LandingPage() {
   const [address, setAddress] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // const [data, setData] = useState({
-  //   lat: 34.052235,
-  //   lng: -118.243683,
-  //   listings: [],
-  // });
 
   // set hisstory to carry data during axios req
   let history = useHistory();
