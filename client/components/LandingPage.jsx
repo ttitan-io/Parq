@@ -3,6 +3,7 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";
+import profile from "../assets/profile.png";
 import topoBackground from "../assets/topoBackground.png";
 import bookArchway from "../assets/book archway.png";
 import hostArchway from "../assets/host archway.png";
@@ -41,6 +42,8 @@ export default function LandingPage() {
   const classes = useStyles();
 
   const [address, setAddress] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+
   // const [data, setData] = useState({
   //   lat: 34.052235,
   //   lng: -118.243683,
@@ -49,6 +52,13 @@ export default function LandingPage() {
 
   // set hisstory to carry data during axios req
   let history = useHistory();
+
+  // check if there is a access_token in the session storage
+  const access_token = window.sessionStorage.getItem("access_token");
+
+  useEffect(() => {
+    setLoggedIn(access_token ? true : false);
+  }, []);
 
   const handleSubmit = (e) => {
     // prevent refresh of the screen
@@ -69,6 +79,7 @@ export default function LandingPage() {
       });
   };
 
+  
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div className="navBar" style={{ height: "70px" }} sx={{ flexGrow: 1 }}>
@@ -119,7 +130,8 @@ export default function LandingPage() {
               </Typography>
             </Button>
             <Button color="inherit" sx={{ flexGrow: 1 }}>
-              <Typography
+              {loggedIn === false && (
+                <Typography
                 variant="h6"
                 component="div"
                 sx={{
@@ -130,6 +142,12 @@ export default function LandingPage() {
               >
                 <LoginPopup />
               </Typography>
+            )}
+            {loggedIn === true && (
+              <Link to='/profile'>
+                <img className="profile" src={profile}></img>
+              </Link>
+            )}
             </Button>
           </Toolbar>
         </Box>
