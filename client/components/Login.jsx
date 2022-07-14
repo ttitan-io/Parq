@@ -58,7 +58,7 @@ export const Login = () => {
         noValidate
         autoComplete="off"
       >
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr'}}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr" }}>
           <TextField
             onChange={(e) => setCreateUsername(e.target.value)}
             required
@@ -73,9 +73,7 @@ export const Login = () => {
             label="password"
             type="password"
             autoComplete="current-password"
-            sx={{
-              
-            }}
+            sx={{}}
           />
           <Button
             onClick={handleLogin}
@@ -84,15 +82,15 @@ export const Login = () => {
             variant="contained"
             // style={btnstyle}
             fullWidth
-            sx={{ 
+            sx={{
               border: ".75px solid #36454F",
-              color: '#BBD1D1',
-              '&:hover': {
-                backgroundColor: '#BBD1D1',
-                color: '#F8F6F2',
+              color: "#BBD1D1",
+              "&:hover": {
+                backgroundColor: "#BBD1D1",
+                color: "#F8F6F2",
                 boxShadow: "none",
-            },
-              background: '#F8F6F2',
+              },
+              background: "#F8F6F2",
               textTransform: "none",
               boxShadow: "none",
               marginTop: ".5rem",
@@ -101,8 +99,8 @@ export const Login = () => {
               marginLeft: ".5rem",
               paddingTop: ".75rem",
               paddingBottom: ".75rem",
-              fontWeight: "bold"
-              }}
+              fontWeight: "bold",
+            }}
           >
             {" "}
             log in
@@ -113,15 +111,15 @@ export const Login = () => {
             color="primary"
             variant="contained"
             // style={btnstyle}
-            sx={{ 
+            sx={{
               border: ".75px solid #36454F",
-              color: '#BBD1D1',
-              '&:hover': {
-                backgroundColor: '#BBD1D1',
-                color: '#F8F6F2',
+              color: "#BBD1D1",
+              "&:hover": {
+                backgroundColor: "#BBD1D1",
+                color: "#F8F6F2",
                 boxShadow: "none",
-            },
-              background: '#F8F6F2',
+              },
+              background: "#F8F6F2",
               textTransform: "none",
               boxShadow: "none",
               width: "92%",
@@ -129,8 +127,8 @@ export const Login = () => {
               marginLeft: ".5rem",
               paddingTop: ".75rem",
               paddingBottom: ".75rem",
-              fontWeight: "bold"
-              }}
+              fontWeight: "bold",
+            }}
           >
             {" "}
             no account? sign up

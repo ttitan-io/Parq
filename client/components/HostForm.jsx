@@ -104,15 +104,15 @@ export default function HostForm() {
           color="primary"
           variant="contained"
           // style={btnstyle}
-          sx={{ 
+          sx={{
             border: ".75px solid #36454F",
-            color: '#BBD1D1',
-            '&:hover': {
-              backgroundColor: '#BBD1D1',
-              color: '#F8F6F2',
+            color: "#BBD1D1",
+            "&:hover": {
+              backgroundColor: "#BBD1D1",
+              color: "#F8F6F2",
               boxShadow: "none",
-          },
-            background: '#F8F6F2',
+            },
+            background: "#F8F6F2",
             textTransform: "none",
             boxShadow: "none",
             width: "74%",
@@ -120,8 +120,8 @@ export default function HostForm() {
             marginLeft: ".2rem",
             paddingTop: ".75rem",
             paddingBottom: ".75rem",
-            fontWeight: "bold"
-            }}
+            fontWeight: "bold",
+          }}
         >
           Submit Form
         </Button>

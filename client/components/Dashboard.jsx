@@ -72,12 +72,10 @@ export default function Dashboard(state) {
       });
   };
 
-  useEffect(
-    () => {
-      setData(state.location.data ? state.location.data : data);
-      setZoom(13);
-    },[]
-  );
+  useEffect(() => {
+    setData(state.location.data ? state.location.data : data);
+    setZoom(13);
+  }, []);
   // { lat: 34.052235, lng: -118.243683, listings: [] }
 
   const listings = data.listings;
@@ -106,7 +104,7 @@ export default function Dashboard(state) {
     var d = R * c;
 
     // console.log(d);
-    // check if the distance is within 5 miles
+    // check if the distance is within 8km, roughly 5 miles
     if (d > 8.04672) {
       props.isVisible = false;
     } else {
@@ -178,7 +176,7 @@ export default function Dashboard(state) {
                   color: "#36454F",
                 }}
               >
-                 <LoginPopup />
+                <LoginPopup />
               </Typography>
             </Button>
           </Toolbar>

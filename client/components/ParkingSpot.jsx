@@ -3,10 +3,8 @@ import topoBackground from "../assets/topoBackground.png";
 import { Link } from "react-router-dom";
 
 const ParkingSpot = ({ address, isVisible }) => {
-
   const onSpotClick = (e) => {
     console.log(address);
-    
   };
 
   return (
