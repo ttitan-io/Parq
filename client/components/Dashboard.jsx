@@ -111,7 +111,7 @@ export default function Dashboard(state) {
 
     // console.log(d);
     // check if the distance is within 8km, roughly 5 miles
-    if (d > 8.04672) {
+    if (d > 8) {
       props.isVisible = false;
     } else {
       props.isVisible = true;
