@@ -131,4 +131,27 @@ apiController.getBooking = async (req, res, next) => {
   });
 };
 
+// get all bookings and listing for a particular user
+apiController.getUserInfo = async (req, res, next) => {
+  // res.locals.username is passed from cookieController.verifyCookie
+
+  // const username = res.locals.username;
+  const username = req.body.username  // make sure to change to above once everything is connected
+  res.locals.userInfo = {};
+  // search query for all bookings hosted by username
+  await Booking.find({ clientUsername: username })
+    .then(result => {
+      res.locals.userInfo.bookings = result;
+  })
+    .catch(err => console.log('Error in getUserInfo route for finding user bookings...', err))
+
+  await Location.find({ hostName: username })
+    .then(result => {
+      res.locals.userInfo.listings = result;
+    })
+    .catch(err => console.log('Error in getUserInfo route for finding host listings...', err))
+
+  return next();
+}
+
 module.exports = apiController;
