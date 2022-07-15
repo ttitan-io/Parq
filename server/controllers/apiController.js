@@ -63,11 +63,13 @@ apiController.getAllLocation = (req, res, next) => {
         },
       });
     }
+    // 
     res.locals.result = {
       lng: res.locals.data.lng,
       lat: res.locals.data.lat,
       listings,
     };
+    console.log('res.locals in getAllLocations', res.locals)
     // res.locals.location = docs;
     return next();
   });
