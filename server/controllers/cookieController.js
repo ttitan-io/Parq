@@ -26,6 +26,7 @@ cookieController.setCookie = (req, res, next) => {
 //for FRONTEND: send token in Authorization header: `authorization: Bearer: ${accessToken}`
 
 cookieController.verifyCookie = (req, res, next) => {
+  // console.log('Headers ==>', req.headers)
   const token = req.headers.authorization.split(" ")[1];
   console.log("token:", token);
   // if (token === null) {

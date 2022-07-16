@@ -17,6 +17,7 @@ import LoginPopup from "./LoginPopup.jsx";
 import AboutPage from "./About.jsx";
 import Host from "./Host.jsx";
 
+
 export default function Profile() {
 
 const [loggedIn, setLoggedIn] = useState(false);
@@ -24,9 +25,37 @@ const [loggedIn, setLoggedIn] = useState(false);
 // check if there is a access_token in the session storage
 const access_token = window.sessionStorage.getItem("access_token");
 
+// get listing and booking data associated with current user
+
+const body = {
+    "username" : "test"
+}
+
+const handleSubmit = (e) => { 
+        e.preventDefault();
+          fetch("http://localhost:3000/api/profile", {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${access_token}`
+            }
+        })
+          .then((res) => {
+            return res.json()
+          })
+          .then ((res) => {
+            console.log("fetch response", res)
+        })
+          .catch((err) => {
+            console.log(`Error occured in Axios request: ${err}`);
+          });
+}
+
+// use all hooks
 useEffect(() => {
     setLoggedIn(access_token ? true : false);
     }, []);
+
+
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -102,7 +131,7 @@ useEffect(() => {
           </div>
 
             <div className="upcomingBookings">
-                <p>upcoming bookings</p>
+                <button onClick={handleSubmit}>upcoming bookings</button>
                 {/* {upcomingBookings} */}
             </div>
             <div className="pastBookings">

@@ -132,10 +132,15 @@ apiController.getBooking = async (req, res, next) => {
 // get all bookings and listing for a particular user
 apiController.getUserInfo = async (req, res, next) => {
   // res.locals.username is passed from cookieController.verifyCookie
+  
+  //const username = res.locals.username;
+  // console.log(username);
+  console.log(req);
+  //make sure to change to above once everything is connected
+   const username = req.params.body
 
-  // const username = res.locals.username;
-  const username = req.body.username  // make sure to change to above once everything is connected
   res.locals.userInfo = {};
+  
   // search query for all bookings hosted by username
   await Booking.find({ clientUsername: username })
     .then(result => {
