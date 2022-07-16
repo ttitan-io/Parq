@@ -12,7 +12,7 @@ googleRequestController.mapLocation = (req, res, next) => {
       .get("https://maps.googleapis.com/maps/api/geocode/json?", {
         params: {
           address: address,
-          key: "AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk",
+          key: process.env.GOOGLE_API_KEY,
         }
       })
       .then(response => {
@@ -44,5 +44,30 @@ googleRequestController.geolocation = (req, res, next) => {
     console.log(`Error in geolocation... ${err}`);
   }
 }
+
+// googleRequestController.getDirections = (req, res, next) => {
+  
+//   // TEST for passing in latitude and longitude in URL with template literals //
+//   // var orgLat = res.locals.geolocation.lat 
+//   // var orgLng = 
+//   const orgLat = 41.43206;
+//   const orgLng = -81.38992;
+
+//   try {
+//     axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${orgLat},${orgLng}&destination=place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE`, {
+//       params: {
+//         key: process.env.GOOGLE_API_KEY,
+//         // origin: {lat: 41.43206, lng: -81.38992},
+//         // destination: 
+//       }
+//     })
+//       .then(response => {
+//         res.locals.directions = response.data;
+//         console.log('Response from getDirections...', response.data);
+//       })
+//   } catch (err) {
+//     console.log('Error in getDirections...', err)
+//   }
+// }
 
 module.exports = googleRequestController;

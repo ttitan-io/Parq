@@ -50,12 +50,15 @@ export default function LandingPage() {
   // set hisstory to carry data during axios req
   let history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     // prevent refresh of the screen
     e.preventDefault();
 
+    await axios.get('/api/profile')
+      .then(res => console.log('response...', res))                   // DELETE THIS
+
     axios
-      .post("http://localhost:3000/api/all", {
+      .post("/api/all", {
         address: address,
       })
       .then((res) => {
