@@ -44,6 +44,7 @@ module.exports = {
   ],
   devServer: {
     port: 8080,
+    // should change how static is formatted?
     static: {
       directory: path.resolve(__dirname, "build"),
       publicPath: "/",

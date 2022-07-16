@@ -13,12 +13,11 @@ googleRequestController.mapLocation = (req, res, next) => {
         params: {
           address: address,
           key: "AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk",
-        },
+        }
       })
-      .then((response) => {
-        console.log("response results [0]:", response.data.results[0]);
+      .then(response => {
+        // console.log("response results [0]:", response.data.results[0]);
         res.locals.data = response.data.results[0].geometry.location;
-        // console.log("Google fetch information:", res.data.data); // these are data from the API call
         return next();
       })
       .catch((err) => console.log(err));
@@ -31,5 +30,19 @@ googleRequestController.mapLocation = (req, res, next) => {
     });
   }
 };
+
+// returns approximate lat/lng based on IP address, and accuracy. Can receive more from req.body to increase accuracy... https://developers.google.com/maps/documentation/geolocation/overview#body
+googleRequestController.geolocation = (req, res, next) => {
+  try {
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.GOOGLE_API_KEY}`)
+      .then(response => {
+        res.locals.geolocation = response.data;
+        console.log('Response from geolocation...', response.data);
+        return next();
+      })
+  } catch (err) {
+    console.log(`Error in geolocation... ${err}`);
+  }
+}
 
 module.exports = googleRequestController;

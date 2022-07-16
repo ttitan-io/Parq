@@ -61,7 +61,16 @@ router.post(
 
 router.get("/profile", /*cookieController.verifyCookie,*/ apiController.getUserInfo, (req, res) => {
   return res.status(200).json(res.locals.userInfo);
-})
+});
+
+router.post(
+  "/geolocation",
+  // cookieController.verifyCookie,
+  googleRequestController.geolocation,
+  (req, res) => {
+    return res.status(200).json(res.locals.geolocation);
+  }
+);
 
 // post for filter bookings
 // router.post("/price", apiController.getPriceLocation, (req,res,next)=> {
