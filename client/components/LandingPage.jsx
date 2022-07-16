@@ -60,7 +60,7 @@ export default function LandingPage() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/all", {
+      .post("/api/all", {
         address: address,
       })
       .then((res) => {
