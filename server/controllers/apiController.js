@@ -133,11 +133,11 @@ apiController.getBooking = async (req, res, next) => {
 apiController.getUserInfo = async (req, res, next) => {
   // res.locals.username is passed from cookieController.verifyCookie
   
-  //const username = res.locals.username;
+  const username = res.locals.username;
   // console.log(username);
-  console.log(req);
+  // console.log(req);
   //make sure to change to above once everything is connected
-   const username = req.params.body
+  //  const username = req.params.body
 
   res.locals.userInfo = {};
   

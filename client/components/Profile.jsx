@@ -33,17 +33,16 @@ const body = {
 
 const handleSubmit = (e) => { 
         e.preventDefault();
-          fetch("http://localhost:3000/api/profile", {
-            method: 'GET',
+          axios.get("/api/profile", {
             headers: {
-              Authorization: `Bearer ${access_token}`
+              Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
             }
         })
-          .then((res) => {
-            return res.json()
-          })
+          // .then((res) => {
+          //   return res.json()
+          // })
           .then ((res) => {
-            console.log("fetch response", res)
+            console.log("axios response...", res)
         })
           .catch((err) => {
             console.log(`Error occured in Axios request: ${err}`);
