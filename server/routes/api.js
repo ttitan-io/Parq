@@ -63,15 +63,17 @@ router.get("/profile", cookieController.verifyCookie, apiController.getUserInfo,
   return res.status(200).json(res.locals.userInfo);
 });
 
-// router.post(
-//   "/getDirection",
-//   // cookieController.verifyCookie,
-//   googleRequestController.geolocation,
-//   googleRequestController.getDirections,
-//   (req, res) => {
-//     return res.status(200).json(res.locals.directions);
-//   }
-// );
+router.post(
+  "/get-directions",
+  // cookieController.verifyCookie,
+  googleRequestController.geolocation,
+  googleRequestController.reverseGeocode,
+  googleRequestController.getDirections,
+  (req, res) => {
+    // console.log('res.locals.directions...', res.locals.directions);
+    return res.status(200).json(res.locals.directions);
+  }
+);
 
 // post for filter bookings
 // router.post("/price", apiController.getPriceLocation, (req,res,next)=> {

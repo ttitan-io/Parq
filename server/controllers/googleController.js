@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const { response } = require("express");
 
 const googleRequestController = {};
 
@@ -45,29 +46,46 @@ googleRequestController.geolocation = (req, res, next) => {
   }
 }
 
-// googleRequestController.getDirections = (req, res, next) => {
-  
-//   // TEST for passing in latitude and longitude in URL with template literals //
-//   // var orgLat = res.locals.geolocation.lat 
-//   // var orgLng = 
-//   const orgLat = 41.43206;
-//   const orgLng = -81.38992;
+googleRequestController.reverseGeocode = async (req, res, next) => {
+  const latLngStr = `${res.locals.geolocation.location.lat},${res.locals.geolocation.location.lng}`;
+  console.log('latLngStr...', latLngStr)
+  res.locals.reverseGeocode = {};
+  try {
+    await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLngStr}&key=${process.env.GOOGLE_API_KEY}`)
+      .then(response => {
+        res.locals.revGeoLocation = response.data.results[0].place_id;
+        // console.log('Response from reverseGeocode... place_id: ', res.locals.revGeoLocation)
+        return next();
+      })
+  } catch (err) {
+      console.log('Error in reverseGeocode...', err);
+  }
+}
 
-//   try {
-//     axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${orgLat},${orgLng}&destination=place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE`, {
-//       params: {
-//         key: process.env.GOOGLE_API_KEY,
-//         // origin: {lat: 41.43206, lng: -81.38992},
-//         // destination: 
-//       }
-//     })
-//       .then(response => {
-//         res.locals.directions = response.data;
-//         console.log('Response from getDirections...', response.data);
-//       })
-//   } catch (err) {
-//     console.log('Error in getDirections...', err)
-//   }
-// }
+googleRequestController.getDirections = (req, res, next) => {
+  
+  // TEST for passing in latitude and longitude in URL with template literals
+  // const orgLat = 41.43206;
+  // const orgLng = -81.38992;
+  const origin = res.locals.revGeoLocation;
+
+  try {
+    axios.get(`https://maps.googleapis.com/maps/api/directions/json?`, {//origin=Toronto&destination=Montreal&key=${process.env.GOOGLE_API_KEY}`, {
+      params: {
+        origin: `place_id:${origin}`,
+        destination: 'Montreal',
+        key: process.env.GOOGLE_API_KEY,
+      }
+    })
+      .then(response => {
+        res.locals.directions = response.data;
+        console.log('Response from getDirections...', response.data);
+        console.log('Response routes...', response.data.routes[0])
+        return next();
+      })
+  } catch (err) {
+    console.log('Error in getDirections...', err)
+  }
+}
 
 module.exports = googleRequestController;
