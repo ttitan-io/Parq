@@ -22,39 +22,51 @@ export default function Profile() {
 
 const [loggedIn, setLoggedIn] = useState(false);
 
+const [bookings, setBookings] = useState();
+const [listings, setListings] = useState();
+
 // check if there is a access_token in the session storage
 const access_token = window.sessionStorage.getItem("access_token");
 
-// get listing and booking data associated with current user
+useEffect(() => {
+    setLoggedIn(access_token ? true : false);
 
-const body = {
-    "username" : "test"
-}
+    // get listing and booking data associated with current user
 
-const handleSubmit = (e) => { 
-        e.preventDefault();
-          axios.get("/api/profile", {
+    // const testFunction = async () => {
+    //   await 
+       axios.get("/api/profile", {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
             }
         })
-          // .then((res) => {
-          //   return res.json()
-          // })
           .then ((res) => {
-            console.log("axios response...", res)
+             console.log("axios response length of array...", res)
+                // setData(res.data);
+                setBookings(res.data.bookings);
+                setListings(res.data.listings);
         })
           .catch((err) => {
             console.log(`Error occured in Axios request: ${err}`);
           });
-}
+    // }
 
-// use all hooks
-useEffect(() => {
-    setLoggedIn(access_token ? true : false);
+    // testFunction();
     }, []);
 
+    console.log("my state bookings...", bookings);
+    console.log("my state listings...", listings);
 
+    // console.log(bookings.length);
+
+    
+    // for (let i = 0; Object.keys(bookings).length; i++) {
+    //     upcomingBookings.push(<ParkingSpotTest key={i} info={bookings[i]} />);
+    // }
+      
+    // const upcomingBookings = bookings.map((ele, i) => {
+    //       return <ParkingSpotTest key={i} info={ele} {...props} />;
+    //   });
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -130,7 +142,7 @@ useEffect(() => {
           </div>
 
             <div className="upcomingBookings">
-                <button onClick={handleSubmit}>upcoming bookings</button>
+                <p>upcoming bookings</p>
                 {/* {upcomingBookings} */}
             </div>
             <div className="pastBookings">

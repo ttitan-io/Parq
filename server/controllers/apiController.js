@@ -140,7 +140,7 @@ apiController.getUserInfo = async (req, res, next) => {
   //  const username = req.params.body
 
   res.locals.userInfo = {};
-  
+
   // search query for all bookings hosted by username
   await Booking.find({ clientUsername: username })
     .then(result => {
