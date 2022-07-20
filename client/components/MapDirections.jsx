@@ -1,114 +1,247 @@
-import React, { Component, useContext, useState } from "react";
-import { Loader } from "@googlemaps/js-api-loader"
-// import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-// import { mapStyles } from "../assets/mapsStyles";
+/*import React from 'react'
+import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 
-// const containerStyle = {
-//   width: "100%",
-//   height: "100%",
-//   float: "left",
-// };
+const containerStyle = {
+  width: '100%',
+  height: '100vh'
+};
 
-// const options = {
-//   styles: mapStyles,
-// };
+const center = {
+  lat: -3.745,
+  lng: -38.523
+};
 
-// const loader = new Loader({
-//   apiKey: "AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk",
-//   version: "weekly",
-//   // ...additionalOptions,
-// });
-
-// loader.load().then(() => {
-//   directionalMap = new google.maps.Map(document.getElementById("directionalMap"), {
-//     center: { lat: -34.397, lng: 150.644 },
-//     zoom: 8,
-//   });
-//   console.log('directionalMap...', directionalMap)
-// });
-
-// export class DirectionalMapContainer extends Component {
-//     render() {
-//     return (
-//         <div id="directionalMap"></div>
-//     );
-//     }
+function MyComponent() {
+  return (
+    <LoadScript
+      googleMapsApiKey="AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk"
+    >
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+      >
+        { /* Child components, such as markers, info windows, etc. */ //}
+        // <></>
+    //   </GoogleMap>
+    // </LoadScript>
+//   )
 // }
 
+// const { Component } = require('react');
+// const { GoogleMap, LoadScript, DirectionsService } = require("../../");
+// const ScriptLoaded = require("../../docs/ScriptLoaded").default;
 
+import React, { useState } from 'react';
+import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
- 
-export class MapContainer extends Component {
-  render() {
-    return (
-      <Map google={this.props.google} zoom={14}>
- 
-        <Marker onClick={this.onMarkerClick}
-                name={'Current location'} />
- 
-        <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>Irvine, CA</h1>
-            </div>
-        </InfoWindow>
-      </Map>
-    );
+export default function MapDirections(props) {
+
+    const [response, setResponse] = useState(null);
+    const [travelMode, setTravelMode] = useState('DRIVING');
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+
+    // this.directionsCallback = this.directionsCallback.bind(this)
+    // this.checkDriving = this.checkDriving.bind(this)
+    // this.getOrigin = this.getOrigin.bind(this)
+    // this.getDestination = this.getDestination.bind(this)
+    // this.onClick = this.onClick.bind(this)
+    // this.onMapClick = this.onMapClick.bind(this)
+
+  function directionsCallback (response) {
+    console.log(response)
+
+    if (response !== null) {
+      if (response.status === 'OK') {
+        setResponse(response);
+      } else {
+        console.log('response: ', response)
+      }
+    }
   }
+
+  function checkDriving ({ target: { checked } }) {
+    checked &&
+      setTravelMode('DRIVING');
+  }
+
+  function getOrigin (ref) {
+    setOrigin(ref);
+  }
+
+  function getDestination (ref) {
+    setDestination(ref);
+  }
+
+  function onClick () {
+    if (origin.value !== '' && destination.value !== '') {
+      setOrigin(origin.value);
+      setDestination(destination.value);
+    }
+  }
+
+  function onMapClick (...args) {
+    console.log('onClick args: ', args)
+  }
+
+  return (
+    <div className='map'>
+      <div className='map-settings'>
+        <hr className='mt-0 mb-3' />
+
+        <div className='row'>
+          <div className='col-md-6 col-lg-4'>
+            <div className='form-group'>
+              <label htmlFor='ORIGIN'>Origin</label>
+              <br />
+              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} />
+            </div>
+          </div>
+
+          <div className='col-md-6 col-lg-4'>
+            <div className='form-group'>
+              <label htmlFor='DESTINATION'>Destination</label>
+              <br />
+              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} />
+            </div>
+          </div>
+        </div>
+
+        {/* <div className='d-flex flex-wrap'>
+          <div className='form-group custom-control custom-radio mr-4'>
+            <input
+              id='DRIVING'
+              className='custom-control-input'
+              name='travelMode'
+              type='radio'
+              checked={travelMode === 'DRIVING'}
+              onChange={checkDriving}
+            />
+            <label className='custom-control-label' htmlFor='DRIVING'>Driving</label>
+          </div>
+
+          <div className='form-group custom-control custom-radio mr-4'>
+            <input
+              id='BICYCLING'
+              className='custom-control-input'
+              name='travelMode'
+              type='radio'
+              checked={this.state.travelMode === 'BICYCLING'}
+              onChange={this.checkBicycling}
+            />
+            <label className='custom-control-label' htmlFor='BICYCLING'>Bicycling</label>
+          </div>
+
+          <div className='form-group custom-control custom-radio mr-4'>
+            <input
+              id='TRANSIT'
+              className='custom-control-input'
+              name='travelMode'
+              type='radio'
+              checked={this.state.travelMode === 'TRANSIT'}
+              onChange={this.checkTransit}
+            />
+            <label className='custom-control-label' htmlFor='TRANSIT'>Transit</label>
+          </div>
+
+          <div className='form-group custom-control custom-radio mr-4'>
+            <input
+              id='WALKING'
+              className='custom-control-input'
+              name='travelMode'
+              type='radio'
+              checked={this.state.travelMode === 'WALKING'}
+              onChange={this.checkWalking}
+            />
+            <label className='custom-control-label' htmlFor='WALKING'>Walking</label>
+          </div>
+        </div> */}
+
+        <button className='btn btn-primary' type='button' onClick={onClick}>
+          Build Route
+        </button>
+      </div>
+
+      <div className='map-container'>
+        <GoogleMap
+          // required
+          id='direction-example'
+          // required
+          mapContainerStyle={{
+            height: '400px',
+            width: '100%'
+          }}
+          // required
+          zoom={2}
+          // required
+          center={{
+            lat: 0,
+            lng: -180
+          }}
+          // optional
+          onClick={onMapClick}
+          // optional
+          onLoad={map => {
+            console.log('DirectionsRenderer onLoad map: ', map)
+          }}
+          // optional
+          onUnmount={map => {
+            console.log('DirectionsRenderer onUnmount map: ', map)
+          }}
+        >
+          {
+            (
+              destination !== '' &&
+              origin !== ''
+            ) && (
+              <DirectionsService
+                // required
+                options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
+                  destination: destination,
+                  origin: origin,
+                  travelMode: travelMode
+                }}
+                // required
+                callback={directionsCallback}
+                // optional
+                onLoad={directionsService => {
+                  console.log('DirectionsService onLoad directionsService: ', directionsService)
+                }}
+                // optional
+                onUnmount={directionsService => {
+                  console.log('DirectionsService onUnmount directionsService: ', directionsService)
+                }}
+              />
+            )
+          }
+
+          {
+            response !== null && (
+              <DirectionsRenderer
+                // required
+                options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
+                  directions: response
+                }}
+                // optional
+                onLoad={directionsRenderer => {
+                  console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
+                }}
+                // optional
+                onUnmount={directionsRenderer => {
+                  console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
+                }}
+              />
+            )
+          }
+        </GoogleMap>
+      </div>
+    </div>
+  )
 }
- 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk"
-})(MapContainer)
 
-// let map, infoWindow;
+{/* <ScriptLoaded>
+  <Directions />
+</ScriptLoaded> */}
 
-// function initMap() {
-//   map = new google.maps.Map(document.getElementById("map"), {
-//     center: { lat: -34.397, lng: 150.644 },
-//     zoom: 6,
-//   });
-//   infoWindow = new google.maps.InfoWindow();
-
-//   const locationButton = document.createElement("button");
-
-//   locationButton.textContent = "Pan to Current Location";
-//   locationButton.classList.add("custom-map-control-button");
-//   map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-//   locationButton.addEventListener("click", () => {
-//     // Try HTML5 geolocation.
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(
-//         (position) => {
-//           const pos = {
-//             lat: position.coords.latitude,
-//             lng: position.coords.longitude,
-//           };
-
-//           infoWindow.setPosition(pos);
-//           infoWindow.setContent("Location found.");
-//           infoWindow.open(map);
-//           map.setCenter(pos);
-//         },
-//         () => {
-//           handleLocationError(true, infoWindow, map.getCenter());
-//         }
-//       );
-//     } else {
-//       // Browser doesn't support Geolocation
-//       handleLocationError(false, infoWindow, map.getCenter());
-//     }
-//   });
-// }
-
-// function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-//   infoWindow.setPosition(pos);
-//   infoWindow.setContent(
-//     browserHasGeolocation
-//       ? "Error: The Geolocation service failed."
-//       : "Error: Your browser doesn't support geolocation."
-//   );
-//   infoWindow.open(map);
-// }
-
-// window.initMap = initMap;
+// export default React.memo(MyComponent)
