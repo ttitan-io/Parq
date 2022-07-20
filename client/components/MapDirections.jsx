@@ -1,53 +1,21 @@
-/*import React from 'react'
-import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
-
-const containerStyle = {
-  width: '100%',
-  height: '100vh'
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
-
-function MyComponent() {
-  return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk"
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-      >
-        { /* Child components, such as markers, info windows, etc. */ //}
-        // <></>
-    //   </GoogleMap>
-    // </LoadScript>
-//   )
-// }
-
-// const { Component } = require('react');
-// const { GoogleMap, LoadScript, DirectionsService } = require("../../");
-// const ScriptLoaded = require("../../docs/ScriptLoaded").default;
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 
 export default function MapDirections(props) {
 
-    const [response, setResponse] = useState(null);
-    const [travelMode, setTravelMode] = useState('DRIVING');
-    const [origin, setOrigin] = useState('');
-    const [destination, setDestination] = useState('');
+  const [response, setResponse] = useState(null);
+  const [travelMode, setTravelMode] = useState('DRIVING');
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
 
-    // this.directionsCallback = this.directionsCallback.bind(this)
-    // this.checkDriving = this.checkDriving.bind(this)
-    // this.getOrigin = this.getOrigin.bind(this)
-    // this.getDestination = this.getDestination.bind(this)
-    // this.onClick = this.onClick.bind(this)
-    // this.onMapClick = this.onMapClick.bind(this)
+  // useEffect(() => {
+  //   const setDirections = () => {
+  //     setOrigin('37.422659,-122.089573');
+  //     setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
+  //   }
+
+  //   setDirections();
+  // }, [])
 
   function directionsCallback (response) {
     console.log(response)
@@ -85,6 +53,16 @@ export default function MapDirections(props) {
     console.log('onClick args: ', args)
   }
 
+  function onLoad (map) {
+    // HTML5 Geolocation API call, then pass that into getOrigin
+    setOrigin('37.422659,-122.089573')
+    setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043')
+    console.log('DirectionsRenderer onLoad map: ', map)
+    console.log('origin...', origin)
+    console.log('destination...', destination)
+
+  }
+
   return (
     <div className='map'>
       <div className='map-settings'>
@@ -93,70 +71,20 @@ export default function MapDirections(props) {
         <div className='row'>
           <div className='col-md-6 col-lg-4'>
             <div className='form-group'>
-              <label htmlFor='ORIGIN'>Origin</label>
+              <label htmlFor='ORIGIN'>Origin - A</label>
               <br />
-              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} />
+              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}/>
             </div>
           </div>
 
           <div className='col-md-6 col-lg-4'>
             <div className='form-group'>
-              <label htmlFor='DESTINATION'>Destination</label>
+              <label htmlFor='DESTINATION'>Destination - B</label>
               <br />
-              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} />
+              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}/>
             </div>
           </div>
         </div>
-
-        {/* <div className='d-flex flex-wrap'>
-          <div className='form-group custom-control custom-radio mr-4'>
-            <input
-              id='DRIVING'
-              className='custom-control-input'
-              name='travelMode'
-              type='radio'
-              checked={travelMode === 'DRIVING'}
-              onChange={checkDriving}
-            />
-            <label className='custom-control-label' htmlFor='DRIVING'>Driving</label>
-          </div>
-
-          <div className='form-group custom-control custom-radio mr-4'>
-            <input
-              id='BICYCLING'
-              className='custom-control-input'
-              name='travelMode'
-              type='radio'
-              checked={this.state.travelMode === 'BICYCLING'}
-              onChange={this.checkBicycling}
-            />
-            <label className='custom-control-label' htmlFor='BICYCLING'>Bicycling</label>
-          </div>
-
-          <div className='form-group custom-control custom-radio mr-4'>
-            <input
-              id='TRANSIT'
-              className='custom-control-input'
-              name='travelMode'
-              type='radio'
-              checked={this.state.travelMode === 'TRANSIT'}
-              onChange={this.checkTransit}
-            />
-            <label className='custom-control-label' htmlFor='TRANSIT'>Transit</label>
-          </div>
-
-          <div className='form-group custom-control custom-radio mr-4'>
-            <input
-              id='WALKING'
-              className='custom-control-input'
-              name='travelMode'
-              type='radio'
-              checked={this.state.travelMode === 'WALKING'}
-              onChange={this.checkWalking}
-            />
-            <label className='custom-control-label' htmlFor='WALKING'>Walking</label>
-          </div>
-        </div> */}
 
         <button className='btn btn-primary' type='button' onClick={onClick}>
           Build Route
@@ -169,7 +97,7 @@ export default function MapDirections(props) {
           id='direction-example'
           // required
           mapContainerStyle={{
-            height: '400px',
+            height: '100vh',
             width: '100%'
           }}
           // required
@@ -182,9 +110,7 @@ export default function MapDirections(props) {
           // optional
           onClick={onMapClick}
           // optional
-          onLoad={map => {
-            console.log('DirectionsRenderer onLoad map: ', map)
-          }}
+          onLoad={onLoad}
           // optional
           onUnmount={map => {
             console.log('DirectionsRenderer onUnmount map: ', map)
@@ -239,9 +165,3 @@ export default function MapDirections(props) {
     </div>
   )
 }
-
-{/* <ScriptLoaded>
-  <Directions />
-</ScriptLoaded> */}
-
-// export default React.memo(MyComponent)
