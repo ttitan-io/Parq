@@ -57,9 +57,9 @@ export default function Profile() {
       const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
       const todaysDate = new Date();
       todaysDate.setHours(0, 0, 0, 0);
-      const dateDifference = Math.abs(Number(todaysDate) - pickedDate);
-      //1 Days=86400000ms
-      if (dateDifference > 86400000) {
+      const dateDifference =Number(todaysDate) - pickedDate;
+      
+      if (dateDifference <= 0) {
         return <ProfileTile id="profileTile" key={i} info={ele} />;
       }
   });
@@ -70,9 +70,9 @@ export default function Profile() {
       const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
       const todaysDate = new Date();
       todaysDate.setHours(0, 0, 0, 0);
-      const dateDifference = Math.abs(Number(todaysDate) - pickedDate);
-      //1 Days=86400000ms
-      if (dateDifference < 86400000) {
+      const dateDifference = Number(todaysDate) - pickedDate;
+
+      if (dateDifference >= 0) {
         return <ProfileTile id="profileTile" key={i} info={ele} />;
       }
   });
