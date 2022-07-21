@@ -175,22 +175,22 @@ export default function Dashboard(state) {
             <Button color="inherit" sx={{ flexGrow: 1 }}>
               {loggedIn === false && (
                 <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "light",
-                  color: "#36454F",
-                }}
-              >
-                <LoginPopup />
-              </Typography>
-            )}
-            {loggedIn === true && (
-              <Link to='/profile'>
-                <img className="profile" src={profile}></img>
-            </Link>
-            )}
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "light",
+                    color: "#36454F",
+                  }}
+                >
+                  <LoginPopup />
+                </Typography>
+              )}
+              {loggedIn === true && (
+                <Link to="/profile">
+                  <img className="profile" src={profile}></img>
+                </Link>
+              )}
             </Button>
           </Toolbar>
         </Box>
@@ -277,7 +277,7 @@ export default function Dashboard(state) {
           className="rightTiles"
           style={{ width: "50%", height: "100%", float: "right" }}
         >
-          {spotElems}
+            {spotElems}
         </div>
       </div>
     </div>

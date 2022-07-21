@@ -44,7 +44,6 @@ export default function LandingPage() {
   const [address, setAddress] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
-
   // set hisstory to carry data during axios req
   let history = useHistory();
 
@@ -74,7 +73,6 @@ export default function LandingPage() {
       });
   };
 
-  
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div className="navBar" style={{ height: "70px" }} sx={{ flexGrow: 1 }}>
@@ -127,22 +125,22 @@ export default function LandingPage() {
             <Button color="inherit" sx={{ flexGrow: 1 }}>
               {loggedIn === false && (
                 <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "light",
-                  color: "#36454F",
-                }}
-              >
-                <LoginPopup />
-              </Typography>
-            )}
-            {loggedIn === true && (
-              <Link to='/profile'>
-                <img className="profile" src={profile}></img>
-              </Link>
-            )}
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "light",
+                    color: "#36454F",
+                  }}
+                >
+                  <LoginPopup />
+                </Typography>
+              )}
+              {loggedIn === true && (
+                <Link to="/profile">
+                  <img className="profile" src={profile}></img>
+                </Link>
+              )}
             </Button>
           </Toolbar>
         </Box>

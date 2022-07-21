@@ -59,12 +59,14 @@ router.post(
 
 // Get request for /profile route, which will show user information (upcoming & past bookings, current listings)
 
-router.get("/profile", 
-cookieController.verifyCookie,
-apiController.getUserInfo,
- (req, res) => {
-  return res.status(200).json(res.locals.userInfo);
-});
+router.get(
+  "/profile",
+  cookieController.verifyCookie,
+  apiController.getUserInfo,
+  (req, res) => {
+    return res.status(200).json(res.locals.userInfo);
+  }
+);
 
 // post for filter bookings
 // router.post("/price", apiController.getPriceLocation, (req,res,next)=> {

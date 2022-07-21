@@ -41,7 +41,7 @@ cookieController.verifyCookie = (req, res, next) => {
         message: err,
       });
     }
-    console.log('The decoded.username object is: ' + decoded.username)
+    console.log("The decoded.username object is: " + decoded.username);
     res.locals.username = decoded.username;
     return next();
   });
