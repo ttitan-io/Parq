@@ -10,6 +10,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+import logo from "../assets/blueParq.png";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -24,8 +25,16 @@ const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle sx=
+    {{
+      position: "relative",
+      marginLeft: "10rem",
+      width: "50%",
+      height: "auto",
+    }}
+     {...other}>
       {children}
+      <img className="websiteLogo" src={logo} />
       {onClose ? (
         <IconButton
           aria-label="close"
@@ -34,7 +43,8 @@ const BootstrapDialogTitle = (props) => {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            marginLeft: "3rem",
+            color: "#BBD1D1",
           }}
         >
           <CloseIcon />
@@ -99,12 +109,30 @@ export default function AboutPage() {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          about
+          
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>Info about parq...</Typography>
-          <Typography gutterBottom>info about booker...</Typography>
-          <Typography gutterBottom>info about host...</Typography>
+          <Typography gutterBottom>
+              <div style={{textAlign: "center", fontWeight: "lighter"}}>
+              <h1 style={{color: "#808C90"}}>Description</h1>
+              Parq makes it easy to find your favorite parking spot. 
+            Just enter your destination into the Parq website, and it will tell you exactly where to park. 
+              </div>
+          
+            <div style={{textAlign: "center", fontWeight: "bold", color: "#808C90"}}>
+              <h1>Product Features</h1>
+            </div>
+            <div style={{textAlign: "center"}}>
+              <div >
+                <li>Find your best parking spot before you leave.</li>
+                <li>Get detailed information about where you parked.</li>
+                <li>Park anywhere in the city.</li>
+                <li>Save money and time by no longer feeding meters.</li>
+                <li>No more circling around looking for a spot.</li>
+                <li>View maps on your device.</li>
+              </div>
+            </div>
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

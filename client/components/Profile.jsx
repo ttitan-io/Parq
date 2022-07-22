@@ -1,77 +1,85 @@
-import * as React from "react";
+import React from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";
 import profile from "../assets/profile.png";
 import topoBackground from "../assets/topoBackground.png";
-import bookArchway from "../assets/book archway.png";
-import hostArchway from "../assets/host archway.png";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core";
-import SearchIcon from "@mui/icons-material/Search";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@mui/material/TextField";
 import LoginPopup from "./LoginPopup.jsx";
 import AboutPage from "./About.jsx";
 import Host from "./Host.jsx";
+import ParkingSpotTest from "./ParkingSpotTest.jsx";
+import ProfileTile from "./ProfileTile.jsx";
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
-export default function LandingPage() {
-  //used to style the search bar
-  const useStyles = makeStyles(() => ({
-    textField: {
-      width: "98%",
-      height: "50%",
-      marginLeft: "auto",
-      marginRight: "auto",
-      paddingBottom: 0,
-      marginTop: 0,
-      fontWeight: 500,
-      borderRadius: 0,
-    },
-    input: {
-      color: "white",
-    },
-  }));
-
-  // setting the invocation of useStyles to classes
-  const classes = useStyles();
-
-  const [address, setAddress] = useState("");
+export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // set hisstory to carry data during axios req
-  let history = useHistory();
+  const [bookings, setBookings] = useState([]);
+  const [listings, setListings] = useState([]);
 
   // check if there is a access_token in the session storage
   const access_token = window.sessionStorage.getItem("access_token");
 
   useEffect(() => {
     setLoggedIn(access_token ? true : false);
-  }, []);
 
-  const handleSubmit = (e) => {
-    // prevent refresh of the screen
-    e.preventDefault();
-
+    // get listing and booking data associated with current user
     axios
-      .post("/api/all", {
-        address: address,
+      .get("/api/profile", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
       })
       .then((res) => {
-        history.push({
-          pathname: "/dashboard",
-          data: res.data,
-        });
+        console.log("axios response length of array...", res);
+        // setData(res.data);
+        setBookings(res.data.bookings);
+        setListings(res.data.listings);
       })
       .catch((err) => {
-        console.log(`Error occured in useEffect: ${err}`);
+        console.log(`Error occured in Axios request: ${err}`);
       });
-  };
+  }, []);
+
+  console.log("my state bookings", bookings);
+  console.log("my state listings", listings);
+
+
+  const upcomingBookings = bookings.map((ele, i) => {
+    const { bookingDate} = ele;
+
+      const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
+      const todaysDate = new Date();
+      todaysDate.setHours(0, 0, 0, 0);
+      const dateDifference =Number(todaysDate) - pickedDate;
+      
+      if (dateDifference <= 0) {
+        return <ProfileTile id="profileTile" key={i} info={ele} />;
+      }
+  });
+
+  const pastBookings = bookings.map((ele, i) => {
+    const { bookingDate} = ele;
+
+      const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
+      const todaysDate = new Date();
+      todaysDate.setHours(0, 0, 0, 0);
+      const dateDifference = Number(todaysDate) - pickedDate;
+
+      if (dateDifference >= 0) {
+        return <ProfileTile id="profileTile" key={i} info={ele} />;
+      }
+  });
+
+  const currentListings = listings.map((ele, i) => {
+    return <ProfileTile id="profileTile" key={i} info={ele} />
+  });
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -106,9 +114,11 @@ export default function LandingPage() {
                 <Host />
               </Typography>
             </Button>
-            <Button>
-              <img className="websiteLogo" src={logo} />
-            </Button>
+            <Link to="/">
+              <Button>
+                <img className="websiteLogo" src={logo} />
+              </Button>
+            </Link>
             <Button color="inherit" sx={{ flexGrow: 1 }}>
               <Typography
                 variant="h6"
@@ -146,49 +156,23 @@ export default function LandingPage() {
         </Box>
       </div>
 
-      <div className="topoSearch" style={{ height: "350px" }}>
-        <img className="topo" src={topoBackground} width="100%"></img>
-        <div className="landingSearch">
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id="standard-search"
-              variant="outlined"
-              label="city, state, zip code"
-              className={classes.textField}
-              value={address}
-              size="small"
-              onChange={(e) => setAddress(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: "#B9D8D8" }} />
-                  </InputAdornment>
-                ),
-              }}
-            ></TextField>
-          </form>
+      <div className="upcomingBookings">
+        <p>upcoming bookings</p>
+        <div className="scrolling-wrapper">
+            {upcomingBookings}
         </div>
       </div>
-
-      <div className="archways" style={{ height: `calc( 100vh - 440px)` }}>
-        <div
-          className="leftArch"
-          style={{ width: "49%", height: "100%", float: "left" }}
-        >
-          <Link to="/dashboard">
-            <button className="leftArchText">book</button>
-          </Link>
-          <img className="archway" src={bookArchway} width="100%"></img>
+      <div className="pastBookings">
+        <p>past bookings</p>
+        <div className="scrolling-wrapper">
+            {pastBookings}
         </div>
-        <div
-          className="rightArch"
-          style={{ width: "50%", height: "100%", float: "right" }}
-        >
-          <Link to="/dashboard">
-            <button className="rightArchText">host</button>
-          </Link>
-          <img className="archway" src={hostArchway} width="100%"></img>
-        </div>
+      </div>
+      <div className="currentListings">
+        <p>current listings</p>
+            <div className="scrolling-wrapper">
+              {currentListings}
+            </div>
       </div>
     </div>
   );

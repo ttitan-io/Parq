@@ -12,7 +12,7 @@ googleRequestController.mapLocation = (req, res, next) => {
       .get("https://maps.googleapis.com/maps/api/geocode/json?", {
         params: {
           address: address,
-          key: "AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk",
+          key: process.env.GOOGLE_API_KEY,
         },
       })
       .then((response) => {
