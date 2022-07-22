@@ -185,7 +185,7 @@ export default function LandingPage() {
           style={{ width: "50%", height: "100%", float: "right" }}
         >
           <Link to="/directions">
-            <button className="rightArchText">TEST</button>
+            <button className="rightArchText">host</button>
           </Link>
           <img className="archway" src={hostArchway} width="100%"></img>
         </div>

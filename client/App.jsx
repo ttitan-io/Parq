@@ -16,10 +16,10 @@ const App = (props) => {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/profile" component={Profile} />
             <LoadScript googleMapsApiKey="AIzaSyADsm4pETi_2Ja_1LHGQae6MGBY2SU1UOk">
               <Route exact path="/directions" component={MapDirections} />
             </LoadScript>
-            <Route exact path="/profile" component={Profile} />
           </Switch>
         </Router>
       </main>
