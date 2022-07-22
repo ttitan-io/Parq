@@ -1,3 +1,4 @@
+
 body {
   background-color: #F8F6F2;
 }
@@ -127,14 +128,13 @@ img.archway {
   background: #B9D8D8;
   border: .75px solid #36454F;
   padding: 30px 30px 30px 30px;
-  overflow: hidden; 
   margin-top: 1rem;
   margin-left: .5rem; 
+  overflow: hidden; 
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
   z-index: 2;
 }
 
@@ -158,7 +158,7 @@ img.archway {
   margin: auto;
   opacity: 50%;
   top: -150px;
-  left: -10px;
+  left: -1px;
   z-index: 1;
 }
 
@@ -168,4 +168,85 @@ img.archway {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.profile {
+  width: 75%;
+  height: auto;
+}
+
+.upcomingBookings {
+  height: 285px;
+  width: 100vw;
+  border-bottom: .75px solid #36454F; 
+} 
+
+.pastBookings { 
+  height: 285px;
+  width: 100vw;
+  border-bottom: .75px solid #36454F; 
+}
+
+.currentListings {
+  width: 100vw;
+  height: calc( 100vh - (71.75px + 301.75px + 301.75px));
+}
+
+.upcomingBookings p,.pastBookings p, .currentListings p  {
+  font-family: Helvetica;
+  font-weight: 100;
+  padding-top: .1rem;
+  padding-left: .5rem;
+}
+
+.profileTileOutter {
+  width: 340px;
+  height: 160px;
+  border-radius: 20px;
+  background: #B9D8D8;
+  border: .75px solid #36454F;
+  padding: 30px 30px 30px 30px;
+  
+  margin-left: .5rem; 
+  overflow: hidden; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.profileTileOutter:hover {
+  transform: translateY(-2px);
+  transition: all .3s ease-in-out;
+}
+
+.spotAddressProfile {
+  font-family: Helvetica;
+  font-weight: bold;
+  font-size: medium;
+  color:#F8F6F2;
+  text-align: center;
+  z-index: 2;
+}
+
+.tileTopoProfile {
+  position: absolute;
+  background-size: cover;
+  margin: auto;
+  opacity: 50%;
+  top: -150px;
+  left: -1px;
+  z-index: 1;
+}
+
+.scrolling-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-right: .5rem;
+
+  .card {
+    flex: 0 0 auto;
+  }
 }

@@ -19,6 +19,7 @@ import LoginPopup from "./LoginPopup.jsx";
 import AboutPage from "./About.jsx";
 import Host from "./Host.jsx";
 import ParkingSpotTest from "./ParkingSpotTest.jsx";
+import profile from "../assets/profile.png";
 
 export default function Dashboard(state) {
   const useStyles = makeStyles(() => ({
@@ -45,6 +46,7 @@ export default function Dashboard(state) {
 
   const [address, setAddress] = useState("");
   const [zoom, setZoom] = useState(10);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [data, setData] = useState({
     lat: 34.052235,
     lng: -118.243683,
@@ -72,9 +74,13 @@ export default function Dashboard(state) {
       });
   };
 
+  // check if there is a access_token in the session storage
+  const access_token = window.sessionStorage.getItem("access_token");
+
   useEffect(() => {
     setData(state.location.data ? state.location.data : data);
     setZoom(13);
+    setLoggedIn(access_token ? true : false);
   }, []);
   // { lat: 34.052235, lng: -118.243683, listings: [] }
 
@@ -105,7 +111,7 @@ export default function Dashboard(state) {
 
     // console.log(d);
     // check if the distance is within 8km, roughly 5 miles
-    if (d > 8.04672) {
+    if (d > 8) {
       props.isVisible = false;
     } else {
       props.isVisible = true;
@@ -167,17 +173,24 @@ export default function Dashboard(state) {
               </Typography>
             </Button>
             <Button color="inherit" sx={{ flexGrow: 1 }}>
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "light",
-                  color: "#36454F",
-                }}
-              >
-                <LoginPopup />
-              </Typography>
+              {loggedIn === false && (
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "light",
+                    color: "#36454F",
+                  }}
+                >
+                  <LoginPopup />
+                </Typography>
+              )}
+              {loggedIn === true && (
+                <Link to="/profile">
+                  <img className="profile" src={profile}></img>
+                </Link>
+              )}
             </Button>
           </Toolbar>
         </Box>
@@ -264,7 +277,7 @@ export default function Dashboard(state) {
           className="rightTiles"
           style={{ width: "50%", height: "100%", float: "right" }}
         >
-          {spotElems}
+            {spotElems}
         </div>
       </div>
     </div>
