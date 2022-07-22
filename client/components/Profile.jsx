@@ -47,9 +47,6 @@ export default function Profile() {
       });
   }, []);
 
-  console.log("my state bookings", bookings);
-  console.log("my state listings", listings);
-
 
   const upcomingBookings = bookings.map((ele, i) => {
     const { bookingDate} = ele;

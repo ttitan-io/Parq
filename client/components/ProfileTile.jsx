@@ -12,7 +12,8 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { BookingForm } from "./BookingForm.jsx";
+// import { BookingForm } from "./BookingForm.jsx";
+import { GetDirectionsPopup } from "./GetDirectionsPopup.jsx";
 import logo from "../assets/blueParq.png";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -64,7 +65,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ParkingSpotTest({ info, isVisible }) {
-  const { address, options, price, size, hostName , location, bookingDate} = info;
+  const { address, options, price, size, hostName , location, bookingDate, length} = info;
   const [open, setOpen] = useState(false);
 
   const onSpotClick = () => {
@@ -107,7 +108,7 @@ export default function ParkingSpotTest({ info, isVisible }) {
                 textAlign: "center",
               }}
             >
-              <div
+              {/* <div className="spotPrice"
                 style={{
                   fontSize: "x-large",
                   fontWeight: "bold",
@@ -115,7 +116,7 @@ export default function ParkingSpotTest({ info, isVisible }) {
                 }}
               >
                 ${price}/hr
-              </div>
+              </div> */}
               <br></br>
               <div style={{ fontWeight: "lighter" }}>{address}</div>
               {size === 1 && (
@@ -128,7 +129,7 @@ export default function ParkingSpotTest({ info, isVisible }) {
                   {options} | {size} cars
                 </div>
               )}
-              <BookingForm hostName={hostName} address={address} />
+              <GetDirectionsPopup bookingDate={bookingDate} price={price} length={length} address={address} location={location}/>
             </DialogContent>
           </BootstrapDialog>
         </div>
