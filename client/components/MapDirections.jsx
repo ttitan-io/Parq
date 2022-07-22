@@ -18,7 +18,7 @@ export default function MapDirections(props) {
   // }, [])
 
   function directionsCallback (response) {
-    console.log(response)
+    console.log('directionsCallback response...', response)
 
     if (response !== null) {
       if (response.status === 'OK') {
@@ -44,8 +44,8 @@ export default function MapDirections(props) {
 
   function onClick () {
     if (origin.value !== '' && destination.value !== '') {
-      setOrigin(origin.value);
-      setDestination(destination.value);
+      setOrigin(origin.value.toString());
+      setDestination(destination.value.toString());
     }
   }
 
@@ -55,11 +55,11 @@ export default function MapDirections(props) {
 
   function onLoad (map) {
     // HTML5 Geolocation API call, then pass that into getOrigin
-    setOrigin('37.422659,-122.089573')
-    setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043')
-    console.log('DirectionsRenderer onLoad map: ', map)
-    console.log('origin...', origin)
-    console.log('destination...', destination)
+    setOrigin('37.422659,-122.089573');
+    setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
+    console.log('DirectionsRenderer onLoad map: ', map);
+    console.log('origin onLoad...', origin.value)
+    console.log('destination onLoad...', destination.value)
 
   }
 

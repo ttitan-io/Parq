@@ -54,9 +54,6 @@ export default function LandingPage() {
     // prevent refresh of the screen
     e.preventDefault();
 
-    await axios.get('/api/profile')
-      .then(res => console.log('response...', res))                   // DELETE THIS
-
     axios
       .post("/api/all", {
         address: address,
