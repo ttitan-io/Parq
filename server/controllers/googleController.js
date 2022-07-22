@@ -14,11 +14,7 @@ googleRequestController.mapLocation = (req, res, next) => {
         params: {
           address: address,
           key: process.env.GOOGLE_API_KEY,
-<<<<<<< HEAD
-        }
-=======
         },
->>>>>>> dev
       })
       .then(response => {
         // console.log("response results [0]:", response.data.results[0]);
