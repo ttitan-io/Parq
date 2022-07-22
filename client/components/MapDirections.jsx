@@ -189,9 +189,9 @@ export default function MapDirections(state) { // add props back if state doesn'
         <div className='map-settings'>
             <div id="directionsForm" className='form-group' style={{ height: "70px" }}>
               <label htmlFor='ORIGIN'>Origin - A</label>
-              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}/>
+              <input id='ORIGIN' className='form-control' type='text' /*ref={getOrigin}*/ defaultValue={origin}/>
               <label htmlFor='DESTINATION'>Destination - B</label>
-              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}/>
+              <input id='DESTINATION' className='form-control' type='text' /*ref={getDestination}*/ defaultValue={destination}/>
               <button className='btn btn-primary' type='button' onClick={onClick}>Build Route</button>
             </div>
       </div>
