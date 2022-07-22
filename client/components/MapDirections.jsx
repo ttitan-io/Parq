@@ -22,7 +22,6 @@ export default function MapDirections(state) {
   const [loggedIn, setLoggedIn] = useState(false);
   const access_token = window.sessionStorage.getItem("access_token");
   useEffect(() => {
-    console.log('login useEffect happens...')
     setLoggedIn(access_token ? true : false);
   }, []);
 
@@ -47,7 +46,6 @@ export default function MapDirections(state) {
   }
 
   function onClick () {
-    console.log('onClick happens...')
     // at this point, origin and destination are refs to the input elements, so have to access .value of origin and destination
     if (origin.value !== '' && destination.value !== '') {
       setOrigin(origin.value);
@@ -70,17 +68,12 @@ export default function MapDirections(state) {
 
   // sets origin as a ref to input element
   const getOrigin = ref => {
-    if (ref) {
-      console.log('getOrigin happens...', ref);
-      setOrigin(ref);
-    } else console.log('no ref Origin');
+    if (ref) setOrigin(ref);
   };
 
+  // sets destination as a ref to input element
   const getDestination = ref => {
-    if (ref) {
-      console.log('getDestination happens...', ref);
-      setDestination(ref);
-    } else console.log('no ref Destination');
+    if (ref) setDestination(ref);
   };
 
   const options = {
