@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 
 export default function MapDirections(props) {
 
   const [response, setResponse] = useState(null);
   const [travelMode, setTravelMode] = useState('DRIVING');
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+  // const [origin, setOrigin] = useState('');
+  // const [destination, setDestination] = useState('');
+  const myRef = useRef('');
+  const origin = useRef('Fresno, CA');
+  const destination = useRef('Irvine, CA');
 
   // useEffect(() => {
-  //   const setDirections = () => {
   //     setOrigin('37.422659,-122.089573');
   //     setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
-  //   }
 
-  //   setDirections();
   // }, [])
 
   function directionsCallback (response) {
@@ -34,19 +34,23 @@ export default function MapDirections(props) {
       setTravelMode('DRIVING');
   }
 
-  function getOrigin (ref) {
-    setOrigin(ref);
-  }
+  // removing these refs causes map to re-render infinitely
+  // function getOrigin (ref) {
+  //   setOrigin(ref.current.value);
+  // }
 
-  function getDestination (ref) {
-    setDestination(ref);
-  }
+  // function getDestination (ref) {
+  //   setDestination(ref.current.value);
+  // }
 
   function onClick () {
-    if (origin.value !== '' && destination.value !== '') {
-      setOrigin(origin.value.toString());
-      setDestination(destination.value.toString());
-    }
+    // if (origin.value !== '' && destination.value !== '') {
+      // getOrigin(origin);
+      // getDestination(destination);
+    // }
+    // need current to access node, then value to access text
+    console.log('Origin...', origin.current.value)
+    console.log('Destination...', destination.current.value)
   }
 
   function onMapClick (...args) {
@@ -55,11 +59,14 @@ export default function MapDirections(props) {
 
   function onLoad (map) {
     // HTML5 Geolocation API call, then pass that into getOrigin
-    setOrigin('37.422659,-122.089573');
-    setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
+
+    // setOrigin and setDestination will actually render the directions in the map
+    // setOrigin('37.422659,-122.089573');
+    // setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
+
     console.log('DirectionsRenderer onLoad map: ', map);
-    console.log('origin onLoad...', origin.value)
-    console.log('destination onLoad...', destination.value)
+    // console.log('origin onLoad...', origin.value)
+    // console.log('destination onLoad...', destination.value)
 
   }
 
@@ -72,16 +79,16 @@ export default function MapDirections(props) {
           <div className='col-md-6 col-lg-4'>
             <div className='form-group'>
               <label htmlFor='ORIGIN'>Origin - A</label>
-              <br />
-              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}/>
+              <br />                                                  {/* removing this ref makes map re-render infinitely */}
+              <input id='ORIGIN' className='form-control' type='text'  ref={origin}  defaultValue={origin.current} />
             </div>
           </div>
 
           <div className='col-md-6 col-lg-4'>
             <div className='form-group'>
               <label htmlFor='DESTINATION'>Destination - B</label>
-              <br />
-              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}/>
+              <br />                                                        {/* removing this ref makes map re-render infinitely */}
+              <input id='DESTINATION' className='form-control' type='text'   ref={destination}  defaultValue={destination.current} />
             </div>
           </div>
         </div>
@@ -89,6 +96,13 @@ export default function MapDirections(props) {
         <button className='btn btn-primary' type='button' onClick={onClick}>
           Build Route
         </button>
+        
+        {/* test div */ }
+        <div className='form-group'>
+            <label htmlFor='MYREF'>myRef - B</label>
+            <br />
+            <input id='MYREF' className='form-control' type='text'  ref={myRef} />
+          </div>
       </div>
 
       <div className='map-container'>
