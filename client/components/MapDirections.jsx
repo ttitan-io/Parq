@@ -10,19 +10,16 @@ export default function MapDirections(props) {
   const originRef = useRef('Fresno, CA');
   const destinationRef = useRef('Irvine, CA');
 
-  // useEffect(() => {
-  //     setOrigin(originRef.current);
-  //     setDestination(destination.current);
-  // }, [])
+  // current problem is that response is causing infinite re-render
+  function directionsCallback (newResponse) {
+    console.log('directionsCallback response...', newResponse)
+    console.log('old response...', response)
 
-  function directionsCallback (response) {
-    console.log('directionsCallback response...', response)
-
-    if (response !== null) {
-      if (response.status === 'OK') {
-        setResponse(response);
+    if (/*newResponse !== null &&*/ newResponse !== response) {
+      if (newResponse.status === 'OK') {
+        setResponse(newResponse);
       } else {
-        console.log('response: ', response)
+        console.log('bad response... ', newResponse)
       }
     }
   }
