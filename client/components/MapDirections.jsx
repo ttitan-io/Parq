@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles.scss";
 import axios from "axios";
@@ -16,44 +16,42 @@ import Host from "./Host.jsx";
 import { mapStyles } from "../assets/mapsStyles";
 
 
-export default function MapDirections(state) { // add props back if state doesn't work 
+export default function MapDirections(state) {
 
+  // check login status
   const [loggedIn, setLoggedIn] = useState(false);
-  // check if there is a access_token in the session storage
   const access_token = window.sessionStorage.getItem("access_token");
   useEffect(() => {
+    console.log('login useEffect happens...')
     setLoggedIn(access_token ? true : false);
   }, []);
 
+  // declare constants to be used for generating directions onLoad
   const latitude = window.sessionStorage.getItem("originLatitude");
   const longitude = window.sessionStorage.getItem("originLongitude");
-
-  console.log("THESE ARE THE COORDS FROM SESSIONS", longitude);
-  console.log("THESE ARE THE COORDS FROM SESSIONS", latitude);
-
-  const [response, setResponse] = useState(null);
-  const [travelMode, setTravelMode] = useState('DRIVING');
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
-
-  const destinationRef = useRef(address ? address : location);
-
-  // useEffect(() => {
-  //   const setDirections = () => {
-  //     setOrigin('37.422659,-122.089573');
-  //     setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
-  //   }
-
-  //   setDirections();
-  // }, [])
-
   const address = state.location.state.address;
   const location = state.location.state.location;
 
-  // console.log("this was passed from profile page => ", state);
 
-  function directionsCallback (response) {
-    console.log('directionsCallback response...', response)
+  const [origin, setOrigin] = useState(`${latitude},${longitude}`);
+  const [destination, setDestination] = useState(address ? address : location);
+  const [response, setResponse] = useState(null);
+  const originRef = useRef('');
+  const destinationRef = useRef('');
+
+  useEffect(() => {
+    console.log('generic useEffect happens...')
+    console.log('generic useEffect origin...', origin)
+    console.log('generic useEffect destination...'), destination
+    console.log('generic useEffect response...', response)
+    console.log('generic useEffect initOrigin...', originRef.current.value)
+    console.log('generic useEffect initDestination...', destinationRef.current.value)
+
+  })
+
+  // causing issues with infinite re-render
+  async function directionsCallback (response) {
+    await console.log('directionsCallback response...', response)
 
     if (response !== null) {
       if (response.status === 'OK') {
@@ -64,41 +62,43 @@ export default function MapDirections(state) { // add props back if state doesn'
     }
   }
 
-  function checkDriving ({ target: { checked } }) {
-    checked &&
-      setTravelMode('DRIVING');
-  }
-
-  function getOrigin (ref) {
-    setOrigin(ref);
-  }
-
-  function getDestination (ref) {
-    setDestination(ref);
-  }
-
   function onClick () {
+    console.log('onClick happens...')
     if (origin.value !== '' && destination.value !== '') {
-      setOrigin(origin.value.toString());
-      setDestination(destination.value.toString());
+      setOrigin(origin.value);
+      setDestination(destination.value);
     }
+    // console.log('origin input box... ', originRef.current.value)
+    // console.log('destination input box... ', destinationRef.current.value)
+    // setOrigin(originRef.current.value);
+    // setDestination(destinationRef.current.value)
   }
 
-  function onMapClick (...args) {
-    console.log('onClick args: ', args)
-  }
+  // function onMapClick (...args) {
+  //   console.log('onClick args: ', args)
+  // }
 
-  // console.log(state.location.state.origin);
-
-  function onLoad (map) {
-    // HTML5 Geolocation API call, then pass that into getOrigin
-    setOrigin(`${latitude},${longitude}`); // '37.422659,-122.089573'
+  function onLoad(map) {
+    // latitude and longitude come from HTML Geolocation API, which was stored in session storage
+    setOrigin(`${latitude},${longitude}`);
+    // destination comes from either address or location in state passed in from redirect
     setDestination(address ? address : location);
     console.log('DirectionsRenderer onLoad map: ', map);
-    console.log('origin onLoad...', origin.value)
-    console.log('destination onLoad...', destination.value)
-
   }
+
+  const getOrigin = ref => {
+    if (ref) {
+      console.log('getOrigin happens...', ref)
+      setOrigin(ref);
+    } else console.log('no ref Origin')
+  };
+
+  const getDestination = ref => {
+    if (ref) {
+      console.log('getDestination happens...', ref)
+      setDestination(ref);
+    } else console.log('no ref Destination')
+  };
 
   const options = {
     styles: mapStyles,
@@ -208,7 +208,7 @@ export default function MapDirections(state) { // add props back if state doesn'
           }}
           options={options}
           // optional
-          onClick={onMapClick}
+          // onClick={onMapClick}
           // optional
           onLoad={onLoad}
           // optional
@@ -226,7 +226,7 @@ export default function MapDirections(state) { // add props back if state doesn'
                 options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
                   destination: destination,
                   origin: origin,
-                  travelMode: travelMode,
+                  travelMode: 'DRIVING',
                 }}
                 // required
                 callback={directionsCallback}
