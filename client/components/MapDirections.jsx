@@ -36,8 +36,6 @@ export default function MapDirections(state) { // add props back if state doesn'
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const originRef = useRef('Fresno, CA');
-  // const destinationRef = useRef('Irvine, CA');
-
   const destinationRef = useRef(address ? address : location);
 
   // useEffect(() => {
@@ -72,13 +70,13 @@ export default function MapDirections(state) { // add props back if state doesn'
   }
 
   // removing these refs causes map to re-render infinitely
-  // function getOrigin (ref) {
-  //   setOrigin(ref.current.value);
-  // }
+  function getOrigin (ref) {
+    setOrigin(ref.current.value);
+  }
 
-  // function getDestination (ref) {
-  //   setDestination(ref.current.value);
-  // }
+  function getDestination (ref) {
+    setDestination(ref.current.value);
+  }
 
   function onClick () {
     if (origin.value !== '' && destination.value !== '') {
@@ -189,9 +187,9 @@ export default function MapDirections(state) { // add props back if state doesn'
         <div className='map-settings'>
             <div id="directionsForm" className='form-group' style={{ height: "70px" }}>
               <label htmlFor='ORIGIN'>Origin - A</label>
-              <input id='ORIGIN' className='form-control' type='text' /*ref={getOrigin}*/ defaultValue={origin}/>
+              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}/>
               <label htmlFor='DESTINATION'>Destination - B</label>
-              <input id='DESTINATION' className='form-control' type='text' /*ref={getDestination}*/ defaultValue={destination}/>
+              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}/>
               <button className='btn btn-primary' type='button' onClick={onClick}>Build Route</button>
             </div>
       </div>
