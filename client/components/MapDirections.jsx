@@ -35,7 +35,7 @@ export default function MapDirections(state) { // add props back if state doesn'
   const [travelMode, setTravelMode] = useState('DRIVING');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
-  const originRef = useRef('Fresno, CA');
+
   const destinationRef = useRef(address ? address : location);
 
   // useEffect(() => {
@@ -59,7 +59,7 @@ export default function MapDirections(state) { // add props back if state doesn'
       if (response.status === 'OK') {
         setResponse(response);
       } else {
-        console.log('bad response... ', newResponse)
+        console.log('response: ', response)
       }
     }
   }
@@ -69,23 +69,19 @@ export default function MapDirections(state) { // add props back if state doesn'
       setTravelMode('DRIVING');
   }
 
-  // removing these refs causes map to re-render infinitely
   function getOrigin (ref) {
-    setOrigin(ref.current.value);
+    setOrigin(ref);
   }
 
   function getDestination (ref) {
-    setDestination(ref.current.value);
+    setDestination(ref);
   }
 
   function onClick () {
     if (origin.value !== '' && destination.value !== '') {
-      setOrigin(originRef.current.value);
-      setDestination(destinationRef.current.value);
+      setOrigin(origin.value.toString());
+      setDestination(destination.value.toString());
     }
-    // need current to access node, then value to access text
-    console.log('Origin...', originRef.current.value)
-    console.log('Destination...', destinationRef.current.value)
   }
 
   function onMapClick (...args) {
@@ -99,8 +95,8 @@ export default function MapDirections(state) { // add props back if state doesn'
     setOrigin(`${latitude},${longitude}`); // '37.422659,-122.089573'
     setDestination(address ? address : location);
     console.log('DirectionsRenderer onLoad map: ', map);
-    // console.log('origin onLoad...', origin.value)
-    // console.log('destination onLoad...', destination.value)
+    console.log('origin onLoad...', origin.value)
+    console.log('destination onLoad...', destination.value)
 
   }
 
