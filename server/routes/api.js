@@ -59,12 +59,19 @@ router.post(
 
 // Get request for /profile route, which will show user information (upcoming & past bookings, current listings)
 
-router.get(
-  "/profile",
-  cookieController.verifyCookie,
-  apiController.getUserInfo,
+router.get("/profile", cookieController.verifyCookie, apiController.getUserInfo, (req, res) => {
+  return res.status(200).json(res.locals.userInfo);
+});
+
+router.post(
+  "/get-directions",
+  // cookieController.verifyCookie,
+  googleRequestController.geolocation,
+  googleRequestController.reverseGeocode,
+  googleRequestController.getDirections,
   (req, res) => {
-    return res.status(200).json(res.locals.userInfo);
+    // console.log('res.locals.directions...', res.locals.directions);
+    return res.status(200).json(res.locals.directions);
   }
 );
 

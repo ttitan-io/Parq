@@ -15,7 +15,7 @@ import AboutPage from "./About.jsx";
 import Host from "./Host.jsx";
 import ParkingSpotTest from "./ParkingSpotTest.jsx";
 import ProfileTile from "./ProfileTile.jsx";
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+// import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(false);
