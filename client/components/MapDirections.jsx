@@ -14,7 +14,6 @@ import LoginPopup from "./LoginPopup.jsx";
 import AboutPage from "./About.jsx";
 import Host from "./Host.jsx";
 import { mapStyles } from "../assets/mapsStyles";
-import TextField from "@mui/material/TextField";
 
 
 export default function MapDirections(state) { // add props back if state doesn't work 
@@ -197,7 +196,7 @@ export default function MapDirections(state) { // add props back if state doesn'
                 fontWeight: "100",
                 color: "#36454F",
                 marginLeft: ".5rem",
-                marginRight: ".5rem",
+                marginRight: ".75rem",
                 padding: ".75rem",
                 width: "325px",
                 border: ".75px solid #36454F",
@@ -222,18 +221,17 @@ export default function MapDirections(state) { // add props back if state doesn'
                 border: ".75px solid #36454F",
                 borderRadius: "10px"
               }}/>
-              <button className='btn btn-primary' type='button' onClick={onClick}
-               style={{
-                fontFamily: "Helvetica",
-                fontWeight: "bold",
-                color: "#F8F6F2",
-                backgroundColor: "#B9D8D8",
-                // paddingTop: ".5rem",
-                // paddingBottom: ".5rem",
-                padding: ".5rem",
-                border: ".75px solid #36454F",
-                borderRadius: "10px"
-              }}>go</button>
+              <button id="goButton" className='goButton' type='button' onClick={onClick}
+              //  style={{
+              //   fontFamily: "Helvetica",
+              //   fontWeight: "bold",
+              //   color: "#BBD1D8",
+              //   background: "#FFFFFF",
+              //   padding: ".5rem",
+              //   border: ".75px solid #36454F",
+              //   borderRadius: "10px"
+              // }}
+              >go</button>
             </div>
       </div>
 

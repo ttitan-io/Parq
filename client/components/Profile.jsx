@@ -52,6 +52,7 @@ export default function Profile() {
 
   const upcomingBookings = bookings.map((ele, i) => {
     const { bookingDate} = ele;
+    const colorPicker = "upcoming";
 
       const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
       const todaysDate = new Date();
@@ -59,12 +60,13 @@ export default function Profile() {
       const dateDifference =Number(todaysDate) - pickedDate;
       
       if (dateDifference <= 0) {
-        return <ProfileTile id="profileTileUpcoming" key={i} info={ele} />;
+        return <ProfileTile id="profileTileUpcoming" key={i} info={ele} colorPicker={colorPicker} />;
       }
   });
 
   const pastBookings = bookings.map((ele, i) => {
     const { bookingDate} = ele;
+    const colorPicker = "past";
 
       const pickedDate = Date.parse(bookingDate.replace(/-/g, " "));
       const todaysDate = new Date();
@@ -72,12 +74,13 @@ export default function Profile() {
       const dateDifference = Number(todaysDate) - pickedDate;
 
       if (dateDifference >= 0) {
-        return <ProfileTile id="profileTilePast" key={i} info={ele} />;
+        return <ProfileTile id="profileTilePast" key={i} info={ele} colorPicker={colorPicker} />;
       }
   });
 
   const currentListings = listings.map((ele, i) => {
-    return <ProfileTile id="profileTileCurrent" key={i} info={ele} />
+    const colorPicker = "current";
+    return <ProfileTile id="profileTileCurrent" key={i} info={ele} colorPicker={colorPicker} />
   });
 
   return (
