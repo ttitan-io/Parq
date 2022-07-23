@@ -4,6 +4,8 @@ const stripe = require("stripe")('sk_test_51LOTKAIdCYscPWvlrD4uDoI80fRTS3YJX1lDq
 const stripeController = {};
 
 stripeController.createPaymentIntent = async (req, res, next) => {
+  console.log('Made it to stripeController...')
+  const { items } = req.body;
   const calculateOrderAmount = (items) => {
     // Replace this constant with a calculation of the order's amount
     // Calculate the order total on the server to prevent

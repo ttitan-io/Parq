@@ -76,10 +76,6 @@ router.post(
   }
 );
 
-router.post("/stripe/create-payment-intent", stripeController.createPaymentIntent, (req, res) => {
-  return res.status(200).json({clientSecret: res.locals.paymentIntent.client_secret});
-});
-
 // post for filter bookings
 // router.post("/price", apiController.getPriceLocation, (req,res,next)=> {
 //   return res.status(200).json();
