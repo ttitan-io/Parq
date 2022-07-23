@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
-import { Link, useNavigate } from "react-router-dom"; // useHistory, Redirect
+import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import { Link, Redirect, useHistory } from "react-router-dom";
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";
@@ -16,93 +16,65 @@ import Host from "./Host.jsx";
 import { mapStyles } from "../assets/mapsStyles";
 
 
-export default function MapDirections(state) { // add props back if state doesn't work 
+export default function MapDirections(state) {
 
+  // check login status
   const [loggedIn, setLoggedIn] = useState(false);
-  // check if there is a access_token in the session storage
   const access_token = window.sessionStorage.getItem("access_token");
   useEffect(() => {
     setLoggedIn(access_token ? true : false);
   }, []);
 
+  // declare constants to be used for generating directions onLoad
   const latitude = window.sessionStorage.getItem("originLatitude");
   const longitude = window.sessionStorage.getItem("originLongitude");
+  const destAddress = state.location.state.address;
+  const destLocation = state.location.state.location;
 
-  console.log("THESE ARE THE COORDS FROM SESSIONS", longitude);
-  console.log("THESE ARE THE COORDS FROM SESSIONS", latitude);
-
+  // initialize origin and destination as locations so that defaultValue of input boxes are correctly populated
+  const [origin, setOrigin] = useState(`${latitude},${longitude}`);
+  const [destination, setDestination] = useState(destAddress ? destAddress : destLocation);
   const [response, setResponse] = useState(null);
-  const [travelMode, setTravelMode] = useState('DRIVING');
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
-  const originRef = useRef('Fresno, CA');
-  const destinationRef = useRef(address ? address : location);
-
-  // useEffect(() => {
-  //   const setDirections = () => {
-  //     setOrigin('37.422659,-122.089573');
-  //     setDestination('One Amphitheatre Pkwy, Mountain View, CA 94043');
-  //   }
-
-  //   setDirections();
-  // }, [])
-
-  const address = state.location.state.address;
-  const location = state.location.state.location;
-
-  // console.log("this was passed from profile page => ", state);
 
   function directionsCallback (response) {
-    console.log('directionsCallback response...', response)
+    console.log('directionsCallback response...', response);
 
     if (response !== null) {
-      if (response.status === 'OK') {
-        setResponse(response);
-      } else {
-        console.log('bad response... ', newResponse)
-      }
+      if (response.status === 'OK') setResponse(response);
+      else console.log('response... ', response);
     }
-  }
-
-  function checkDriving ({ target: { checked } }) {
-    checked &&
-      setTravelMode('DRIVING');
-  }
-
-  // removing these refs causes map to re-render infinitely
-  function getOrigin (ref) {
-    setOrigin(ref.current.value);
-  }
-
-  function getDestination (ref) {
-    setDestination(ref.current.value);
   }
 
   function onClick () {
+    // at this point, origin and destination are refs to the input elements, so have to access .value of origin and destination
     if (origin.value !== '' && destination.value !== '') {
-      setOrigin(originRef.current.value);
-      setDestination(destinationRef.current.value);
+      setOrigin(origin.value);
+      setDestination(destination.value);
     }
-    // need current to access node, then value to access text
-    console.log('Origin...', originRef.current.value)
-    console.log('Destination...', destinationRef.current.value)
   }
 
   function onMapClick (...args) {
-    console.log('onClick args: ', args)
+    console.log('onClick args... ', args)
   }
 
-  // console.log(state.location.state.origin);
-
-  function onLoad (map) {
-    // HTML5 Geolocation API call, then pass that into getOrigin
-    setOrigin(`${latitude},${longitude}`); // '37.422659,-122.089573'
-    setDestination(address ? address : location);
-    console.log('DirectionsRenderer onLoad map: ', map);
-    // console.log('origin onLoad...', origin.value)
-    // console.log('destination onLoad...', destination.value)
-
+  // ??? need to setOrigin and setDestination to trigger directionsCallback for some reason...
+  function onLoad(map) {
+    // latitude and longitude come from HTML Geolocation API, which was stored in session storage
+    setOrigin(`${latitude},${longitude}`);
+    // destination comes from either address or location in state passed in from redirect
+    setDestination(destAddress ? destAddress : destLocation);
+    console.log('DirectionsRenderer onLoad map... ', map);
   }
+
+  // sets origin as a ref to input element
+  const getOrigin = ref => {
+    if (ref) setOrigin(ref);
+  };
+
+  // sets destination as a ref to input element
+  const getDestination = ref => {
+    if (ref) setDestination(ref);
+  };
 
   const options = {
     styles: mapStyles,
@@ -111,7 +83,7 @@ export default function MapDirections(state) { // add props back if state doesn'
 
   return (
     <div>
-       <div className="navBar" style={{ height: "70px" }} sx={{ flexGrow: 1 }}>
+      <div className="navBar" style={{ height: "70px" }} sx={{ flexGrow: 1 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
             <Button color="inherit" sx={{ flexGrow: 1 }}>
@@ -184,89 +156,128 @@ export default function MapDirections(state) { // add props back if state doesn'
         </Box>
       </div>
       <div className='map'>
-        <div className='map-settings'>
-            <div id="directionsForm" className='form-group' style={{ height: "70px" }}>
-              <label htmlFor='ORIGIN'>Origin - A</label>
-              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}/>
-              <label htmlFor='DESTINATION'>Destination - B</label>
-              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}/>
-              <button className='btn btn-primary' type='button' onClick={onClick}>Build Route</button>
+        <div id="mapInputs" className='map-settings'>
+            <div id="directionsForm" className='form-group' style={{ height: "50px" }}>
+              <label 
+              htmlFor='ORIGIN' 
+              style={{
+                 fontFamily: "Helvetica",
+                 fontWeight: "100",
+                 color: "#36454F",
+                 fontSize: "18px"
+              }}> from </label>
+              <input id='ORIGIN' className='form-control' type='text' ref={getOrigin} defaultValue={origin}
+              style={{
+                fontFamily: "Helvetica",
+                fontWeight: "100",
+                color: "#36454F",
+                marginLeft: ".5rem",
+                marginRight: ".75rem",
+                padding: ".75rem",
+                width: "325px",
+                border: ".75px solid #36454F",
+                borderRadius: "10px"
+              }}/>
+              <label htmlFor='DESTINATION' 
+               style={{
+                fontFamily: "Helvetica",
+                fontWeight: "100",
+                color: "#36454F",
+                fontSize: "18px"
+             }}>to </label>
+              <input id='DESTINATION' className='form-control' type='text' ref={getDestination} defaultValue={destination}
+              style={{
+                fontFamily: "Helvetica",
+                fontWeight: "100",
+                color: "#36454F",
+                marginLeft: ".5rem",
+                marginRight: "1rem",
+                padding: ".75rem",
+                width: "325px",
+                border: ".75px solid #36454F",
+                borderRadius: "10px"
+              }}/>
+              <button id="goButton" className='goButton' type='button' onClick={onClick}
+              //  style={{
+              //   fontFamily: "Helvetica",
+              //   fontWeight: "bold",
+              //   color: "#BBD1D8",
+              //   background: "#FFFFFF",
+              //   padding: ".5rem",
+              //   border: ".75px solid #36454F",
+              //   borderRadius: "10px"
+              // }}
+              >go</button>
             </div>
-      </div>
+        </div>
 
-      <div className='map-container'>
-        <GoogleMap
-          // required
-          id='direction-example'
-          // required
-          mapContainerStyle={{
-            height: '100%',
-            width: '100%'
-          }}
-          // required
-          zoom={2}
-          // required
-          center={{
-            lat: 0,
-            lng: -180
-          }}
-          options={options}
-          // optional
-          onClick={onMapClick}
-          // optional
-          onLoad={onLoad}
-          // optional
-          onUnmount={map => {
-            console.log('DirectionsRenderer onUnmount map: ', map)
-          }}
-        >
-          {
-            (
-              destination !== '' &&
-              origin !== ''
-            ) && (
-              <DirectionsService
-                // required
-                options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
-                  destination: destination,
-                  origin: origin,
-                  travelMode: travelMode,
-                }}
-                // required
-                callback={directionsCallback}
-                // optional
-                onLoad={directionsService => {
-                  console.log('DirectionsService onLoad directionsService: ', directionsService)
-                }}
-                // optional
-                onUnmount={directionsService => {
-                  console.log('DirectionsService onUnmount directionsService: ', directionsService)
-                }}
-              />
-            )
-          }
+        <div className='map-container'>
+          <GoogleMap
+            // required
+            id='direction-example'
+            // required
+            mapContainerStyle={{
+              height: '100%',
+              width: '100%'
+            }}
+            // required
+            zoom={2}
+            // required
+            center={{
+              lat: 0,
+              lng: -180
+            }}
+            options={options}
+            // optional
+            onClick={onMapClick}
+            // optional
+            onLoad={onLoad}
+            // optional
+            onUnmount={map => {
+              console.log('DirectionsRenderer onUnmount map: ', map)
+            }}
+          >
+            {
+              (
+                destination !== '' &&
+                origin !== ''
+              ) && (
+                <DirectionsService
+                  // required
+                  options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
+                    destination: destination,
+                    origin: origin,
+                    travelMode: 'DRIVING',
+                  }}
+                  // required
+                  callback={directionsCallback}
+                  // optional
+                  onLoad={directionsService => { console.log('DirectionsService onLoad directionsService: ', directionsService) }}
+                  // optional
+                  onUnmount={directionsService => { console.log('DirectionsService onUnmount directionsService: ', directionsService) }}
+                />
+              )
+            }
 
-          {
-            response !== null && (
-              <DirectionsRenderer
-                // required
-                options={{ // eslint-disable-line react-perf/jsx-no-new-object-as-prop
-                  directions: response
-                }}
-                // optional
-                onLoad={directionsRenderer => {
-                  console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
-                }}
-                // optional
-                onUnmount={directionsRenderer => {
-                  console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
-                }}
-              />
-            )
-          }
-        </GoogleMap>
+            {
+              response !== null && (
+                <DirectionsRenderer
+                  // required
+                  options={{ directions: response }} // eslint-disable-line react-perf/jsx-no-new-object-as-prop
+                  // optional
+                  onLoad={directionsRenderer => {
+                    console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
+                  }}
+                  // optional
+                  onUnmount={directionsRenderer => {
+                    console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
+                  }}
+                />
+              )
+            }
+          </GoogleMap>
+        </div>
       </div>
-    </div>
     </div>
   )
 }

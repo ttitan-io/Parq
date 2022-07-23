@@ -156,7 +156,7 @@ img.archway {
   position: absolute;
   background-size: cover;
   margin: auto;
-  opacity: 50%;
+  opacity: 70%;
   top: -150px;
   left: -1px;
   z-index: 1;
@@ -171,7 +171,7 @@ img.archway {
 }
 
 .profile {
-  width: 75%;
+  width: 80%;
   height: auto;
 }
 
@@ -203,10 +203,9 @@ img.archway {
   width: 340px;
   height: 160px;
   border-radius: 20px;
-  background: #B9D8D8;
   border: .75px solid #36454F;
   padding: 30px 30px 30px 30px;
-  
+ 
   margin-left: .5rem; 
   overflow: hidden; 
   display: flex;
@@ -251,9 +250,9 @@ img.archway {
   }
 }
 
-.directionsForm {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+#directionsForm {
+margin-top: .75rem;
+margin-bottom: .60rem;
 }
 
 .map-container {
@@ -392,4 +391,31 @@ button:disabled.stripe {
   border-radius: 10px;
   border: .75px solid #36454F;
   padding: 40px;
+}
+
+.upcomingBookings.scrolling-wrapper.card.profileTileOutter {
+        background: #B9D8D8;
+}
+
+#mapInputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.goButton {
+  font-family: Helvetica;
+  font-weight: bold;
+  color: #BBD1D8;
+  background: #FFFFFF;
+  padding: .5rem;
+  border: .75px solid #36454F;
+  border-radius: 10px;
+}
+.goButton:hover {
+  background-color: #BBD1D8;
+  color: #F8F6F2;
+  box-shadow: none;
 }
