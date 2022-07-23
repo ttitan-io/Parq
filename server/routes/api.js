@@ -6,6 +6,7 @@ const apiController = require("../controllers/apiController");
 const loginController = require("../controllers/loginController");
 const cookieController = require("../controllers/cookieController");
 const googleRequestController = require("../controllers/googleController");
+const stripeController = require("../controllers/stripeController");
 
 // get requests for a single location - When user clicks a marker on the map
 router.get("/location", apiController.getLocation, (req, res) => {
