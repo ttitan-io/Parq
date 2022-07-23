@@ -6,6 +6,7 @@ const apiController = require("../controllers/apiController");
 const loginController = require("../controllers/loginController");
 const cookieController = require("../controllers/cookieController");
 const googleRequestController = require("../controllers/googleController");
+const stripeController = require("../controllers/stripeController");
 
 // get requests for a single location - When user clicks a marker on the map
 router.get("/location", apiController.getLocation, (req, res) => {
@@ -74,6 +75,10 @@ router.post(
     return res.status(200).json(res.locals.directions);
   }
 );
+
+router.post("/stripe/create-payment-intent", stripeController.createPaymentIntent, (req, res) => {
+  return res.status(200).json({clientSecret: res.locals.paymentIntent.client_secret});
+});
 
 // post for filter bookings
 // router.post("/price", apiController.getPriceLocation, (req,res,next)=> {
