@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect, useNavigate } from "react-router-dom"; // useHistory
+import { Link, Redirect, useHistory } from "react-router-dom"; // useHistory
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";
@@ -48,6 +48,17 @@ export default function Profile() {
   }, []);
 
   console.log(listings);
+
+  let history = useHistory();
+
+  const handleLogout = (e) => {
+    // prevent refresh of the screen
+    e.preventDefault();
+    window.sessionStorage.removeItem("access_token");
+    history.push({
+      pathname: "/",
+    });
+  };
 
 
   const upcomingBookings = bookings.map((ele, i) => {
@@ -149,9 +160,19 @@ export default function Profile() {
                 </Typography>
               )}
               {loggedIn === true && (
-                <Link to="/profile">
-                  <img className="profile" src={profile}></img>
-                </Link>
+                <Button onClick={handleLogout}>
+                  {/* <img className="profile" src={profile}></img> */}
+                  <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: "light",
+                    color: "#36454F",
+                  }}
+                >logout
+                </Typography>
+                </Button>
               )}
             </Button>
           </Toolbar>
