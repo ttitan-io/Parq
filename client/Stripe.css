@@ -38,7 +38,7 @@ form {
 }
 
 /* Buttons and links */
-button {
+button.stripe {
   background: #5469d4;
   font-family: Arial, sans-serif;
   color: #ffffff;
@@ -54,11 +54,11 @@ button {
   width: 100%;
 }
 
-button:hover {
+button:hover.stripe {
   filter: contrast(115%);
 }
 
-button:disabled {
+button:disabled.stripe {
   opacity: 0.5;
   cursor: default;
 }
