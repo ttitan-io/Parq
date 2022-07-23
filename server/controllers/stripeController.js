@@ -23,6 +23,7 @@ stripeController.createPaymentIntent = async (req, res, next) => {
   });
 
   res.locals.paymentIntent = paymentIntent;
+  // console.log('paymentIntent in stripeController... ', res.locals.paymentIntent);
   return next();
 };
 
