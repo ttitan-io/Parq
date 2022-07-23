@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm.jsx";
-import "../Stripe.css";
+import logo from "../assets/blueParq.png";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -36,6 +36,9 @@ export default function StripeContainer() {
 
   return (
     <div className="StripeContainer">
+      <div>
+        <img className="websiteLogoStripe" src={logo} />
+      </div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />

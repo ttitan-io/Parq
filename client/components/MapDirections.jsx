@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GoogleMap, LoadScript, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useHistory, Redirect
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";

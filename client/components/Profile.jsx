@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useNavigate } from "react-router-dom"; // useHistory
 import "../styles.scss";
 import axios from "axios";
 import logo from "../assets/blueParq.png";

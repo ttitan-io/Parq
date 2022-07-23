@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom"; // useHistory
 import "../styles.scss";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
@@ -58,6 +58,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export const BookingForm = ({ hostName, address }) => {
+
   const [createDate, setCreateDate] = useState("");
   const [createLength, setCreateLength] = useState(0);
   const [open, setOpen] = useState(false);
@@ -92,7 +93,11 @@ export const BookingForm = ({ hostName, address }) => {
       )
       .then((res) => {
         if (res.status === 200) {
-          alert("Booking has been created");
+          console.log("Booking has been created");
+          history.push({
+            pathname: "/stripe",
+          });
+  
         }
       })
       .catch((err) => {
@@ -112,7 +117,10 @@ export const BookingForm = ({ hostName, address }) => {
         }}
         noValidate
         autoComplete="off"
+        
       >
+
+
         <div>
           {" "}
           <TextField
@@ -129,34 +137,38 @@ export const BookingForm = ({ hostName, address }) => {
             label="Date"
             defaultValue=""
           />
-          <Button
-            onClick={handleBooking}
-            type="submit"
-            color="primary"
-            variant="contained"
-            // style={btnstyle}
-            sx={{
-              border: ".75px solid #36454F",
-              color: "#BBD1D1",
-              "&:hover": {
-                backgroundColor: "#BBD1D1",
-                color: "#F8F6F2",
-                boxShadow: "none",
-              },
-              background: "#F8F6F2",
-              textTransform: "none",
-              boxShadow: "none",
-              width: "84%",
-              marginBottom: ".5rem",
-              marginLeft: ".2rem",
-              paddingTop: ".75rem",
-              paddingBottom: ".75rem",
-              fontWeight: "bold",
-            }}
-          >
-            {" "}
-            Book
-          </Button>
+          {/* <Link to="/stripe" style={ {textDecoration: "none"} }> */}
+            {/* <form onSubmit={handleBooking} > */}
+              <Button
+                onClick={handleBooking}
+                type="submit"
+                color="primary"
+                variant="contained"
+                // style={btnstyle}
+                sx={{
+                  border: ".75px solid #36454F",
+                  color: "#BBD1D1",
+                  "&:hover": {
+                    backgroundColor: "#BBD1D1",
+                    color: "#F8F6F2",
+                    boxShadow: "none",
+                  },
+                  background: "#F8F6F2",
+                  textTransform: "none",
+                  boxShadow: "none",
+                  width: "84%",
+                  marginBottom: ".5rem",
+                  marginLeft: ".2rem",
+                  paddingTop: ".75rem",
+                  paddingBottom: ".75rem",
+                  fontWeight: "bold",
+                }}
+              >
+                {" "}
+                Book
+              </Button>
+            {/* </form> */}
+          {/* </Link> */}
         </div>
       </Box>
     );
