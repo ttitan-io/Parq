@@ -114,12 +114,12 @@ export default function AboutPage() {
         <DialogContent dividers>
           <Typography gutterBottom>
               <div style={{textAlign: "center", fontWeight: "lighter"}}>
-              <h1 style={{color: "#808C90"}}>Description</h1>
+              <h1 style={{color: "#6C7983"}}>Description</h1>
               Parq makes it easy to find your favorite parking spot. 
             Just enter your destination into the Parq website, and it will tell you exactly where to park. 
               </div>
           
-            <div style={{textAlign: "center", fontWeight: "bold", color: "#808C90"}}>
+            <div style={{textAlign: "center", fontWeight: "bold", color: "#6C7983"}}>
               <h1>Product Features</h1>
             </div>
             <div style={{textAlign: "center"}}>

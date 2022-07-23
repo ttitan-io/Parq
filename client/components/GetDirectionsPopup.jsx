@@ -100,33 +100,41 @@ navigator.geolocation.getCurrentPosition(returnLocation);
             textTransform: "none",
             fontWeight: "light",
             color: "#36454F",
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
           }}
         >
-          {address && (
-                <p>{address}</p>
+          {address && length && (
+                <p style={{ 
+                    fontWeight: "lighter",
+                    marginTop: "0rem", 
+                    marginBottom: "0rem",
+                    fontSize: "25px" 
+                }}>{address}</p>
             )}
-            {location && (
-                <p>{location}</p>
+            {location && length && (
+               <p style={{ 
+                    fontWeight: "lighter",
+                    marginTop: "0rem", 
+                    marginBottom: "0rem",
+                    fontSize: "25px" 
+                }}>{location}</p>
             )}
-        </Typography>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            textTransform: "none",
-            fontWeight: "light",
-            color: "#36454F",
-          }}
-        >
-             {length === 1 && (
-                <div style={{ fontWeight: "lighter" }}>
-                  booked for {bookingDate} for {length} day
-                </div>
+            {length === 1 && (
+                  <p style={{ 
+                    fontWeight: "lighter", 
+                    marginTop: "0rem",
+                    marginBottom: "2rem", 
+                    fontSize: "15px" 
+                }}>booked {bookingDate} for {length} day</p>
               )}
-              {length > 1 && (
-                <div style={{ fontWeight: "lighter" }}>
-                  booked for {bookingDate} for {length} days
-                </div>
+              {length > 1 && (           
+                   <p style={{ 
+                    fontWeight: "lighter", 
+                    marginTop: "0rem",
+                    marginBottom: "2rem", 
+                    fontSize: "15px" 
+                }}>booked {bookingDate} for {length} days</p>
               )}
         </Typography>
             <Link to={{
@@ -137,7 +145,7 @@ navigator.geolocation.getCurrentPosition(returnLocation);
                     location: location,
                     // origin: origin,
                     }
-                }}>
+                }} style={{ textDecoration: "none" }}>
                 <Button
                     type="submit"
                     color="primary"
@@ -161,7 +169,7 @@ navigator.geolocation.getCurrentPosition(returnLocation);
                     fontWeight: "bold",
                     }}
                 >
-                    {" "}
+                    {/* {" "} */}
                     get directions!
                 </Button>
             </Link>
