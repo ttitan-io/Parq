@@ -30,16 +30,18 @@ const BootstrapDialogTitle = (props) => {
 
   return (
     <DialogTitle
-      sx={{
-        position: "relative",
-        marginLeft: "10rem",
-        width: "50%",
-        height: "auto",
-      }}
+    //   sx={{
+    //     position: "relative",
+    //     marginLeft: "6.5rem",
+    //     width: "50%",
+    //     height: "auto",
+    //   }}
+    //   style={{height: "100%"}}
       {...other}
     >
       {children}
-      <img className="websiteLogo" src={logo} />
+      <br></br>
+      {/* <img className="websiteLogo" src={logo} /> */}
       {onClose ? (
         <IconButton
           aria-label="close"
@@ -48,7 +50,7 @@ const BootstrapDialogTitle = (props) => {
             position: "absolute",
             right: 8,
             top: 8,
-            marginLeft: "3rem",
+            marginLeft: "1rem",
             color: "#BBD1D1",
           }}
         >
@@ -108,24 +110,27 @@ export default function ParkingSpotTest({ info, isVisible }) {
                 textAlign: "center",
               }}
             >
-              {/* <div className="spotPrice"
-                style={{
-                  fontSize: "x-large",
-                  fontWeight: "bold",
-                  color: "#BBD1D1",
-                }}
-              >
-                ${price}/hr
-              </div> */}
               <br></br>
-              <div style={{ fontWeight: "lighter" }}>{address}</div>
+              <div style={{ 
+                fontWeight: "lighter",
+                marginTop: "0rem", 
+                marginBottom: "0rem",
+                fontSize: "25px"  }}>{address}</div>
               {size === 1 && (
-                <div style={{ fontWeight: "lighter" }}>
+                <div style={{ 
+                    fontWeight: "lighter",
+                    paddingTop: ".5rem",
+                    paddingBottom: "1rem",
+                    fontSize: "15px"   }}>
                   {options} | {size} car
                 </div>
               )}
               {size > 1 && (
-                <div style={{ fontWeight: "lighter" }}>
+                <div style={{ 
+                    fontWeight: "lighter", 
+                    paddingTop: ".5rem",
+                    paddingBottom: "1rem",
+                    fontSize: "15px"  }}>
                   {options} | {size} cars
                 </div>
               )}

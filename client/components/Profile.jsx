@@ -47,6 +47,8 @@ export default function Profile() {
       });
   }, []);
 
+  console.log(listings);
+
 
   const upcomingBookings = bookings.map((ele, i) => {
     const { bookingDate} = ele;
@@ -57,7 +59,7 @@ export default function Profile() {
       const dateDifference =Number(todaysDate) - pickedDate;
       
       if (dateDifference <= 0) {
-        return <ProfileTile id="profileTile" key={i} info={ele} />;
+        return <ProfileTile id="profileTileUpcoming" key={i} info={ele} />;
       }
   });
 
@@ -70,12 +72,12 @@ export default function Profile() {
       const dateDifference = Number(todaysDate) - pickedDate;
 
       if (dateDifference >= 0) {
-        return <ProfileTile id="profileTile" key={i} info={ele} />;
+        return <ProfileTile id="profileTilePast" key={i} info={ele} />;
       }
   });
 
   const currentListings = listings.map((ele, i) => {
-    return <ProfileTile id="profileTile" key={i} info={ele} />
+    return <ProfileTile id="profileTileCurrent" key={i} info={ele} />
   });
 
   return (
@@ -166,7 +168,7 @@ export default function Profile() {
         </div>
       </div>
       <div className="currentListings">
-        <p>current listings</p>
+        <p>my current listings</p>
             <div className="scrolling-wrapper">
               {currentListings}
             </div>
